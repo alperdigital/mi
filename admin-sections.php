@@ -64,31 +64,36 @@ function mi_section_settings_callback($post) {
     $is_active = get_post_meta($post->ID, '_mi_section_active', true);
     
     ?>
+    <div class="section-settings-notice" style="background: #f0f0f1; padding: 15px; border-left: 4px solid #2271b1; margin-bottom: 20px;">
+        <p style="margin: 0;"><strong>💡 İpucu:</strong> Bu bölümü düzenlemek için üstteki <strong>Başlık</strong> ve <strong>İçerik</strong> alanlarını kullanabilirsiniz. Aşağıdaki ayarlar bölümün görünümünü ve davranışını kontrol eder.</p>
+    </div>
+    
     <table class="form-table">
         <tr>
-            <th><label for="mi_section_name">Bölüm İsmi</label></th>
+            <th><label for="mi_section_name">📝 Bölüm İsmi</label></th>
             <td>
                 <input type="text" id="mi_section_name" name="mi_section_name" 
                        value="<?php echo esc_attr($section_name ?: $post->post_title); ?>" 
                        class="regular-text" />
-                <p class="description">Menüde görünecek bölüm ismi</p>
+                <p class="description">Menüde görünecek bölüm ismi (boş bırakılırsa başlık kullanılır)</p>
             </td>
         </tr>
         <tr>
-            <th><label for="mi_section_type">Sayfa Tipi</label></th>
+            <th><label for="mi_section_type">🎨 Sayfa Tipi</label></th>
             <td>
                 <select id="mi_section_type" name="mi_section_type" class="regular-text">
-                    <option value="default" <?php selected($section_type, 'default'); ?>>Varsayılan</option>
-                    <option value="manset" <?php selected($section_type, 'manset'); ?>>Manşet (Haber Listesi)</option>
-                    <option value="kararlar" <?php selected($section_type, 'kararlar'); ?>>Kararlar (Karar Listesi)</option>
-                    <option value="iletisim" <?php selected($section_type, 'iletisim'); ?>>İletişim (Form)</option>
-                    <option value="custom" <?php selected($section_type, 'custom'); ?>>Özel İçerik</option>
+                    <option value="default" <?php selected($section_type, 'default'); ?>>📄 Varsayılan</option>
+                    <option value="aciklama" <?php selected($section_type, 'aciklama'); ?>>📝 Açıklama</option>
+                    <option value="manset" <?php selected($section_type, 'manset'); ?>>📰 Manşet (Haber Listesi)</option>
+                    <option value="kararlar" <?php selected($section_type, 'kararlar'); ?>>⚖️ Kararlar (Karar Listesi)</option>
+                    <option value="iletisim" <?php selected($section_type, 'iletisim'); ?>>📧 İletişim</option>
+                    <option value="custom" <?php selected($section_type, 'custom'); ?>>🎨 Özel İçerik</option>
                 </select>
-                <p class="description">Sayfanın görünüm tipini seçin</p>
+                <p class="description"><strong>Önemli:</strong> Sayfa tipini değiştirdiğinizde, aşağıda ilgili özel ayarlar görünecektir.</p>
             </td>
         </tr>
         <tr>
-            <th><label for="mi_ui_template">UI Tasarım Konumu</label></th>
+            <th><label for="mi_ui_template">📍 UI Tasarım Konumu</label></th>
             <td>
                 <select id="mi_ui_template" name="mi_ui_template" class="regular-text">
                     <option value="default" <?php selected($ui_template, 'default'); ?>>Varsayılan</option>
@@ -97,73 +102,128 @@ function mi_section_settings_callback($post) {
                     <option value="sidebar" <?php selected($ui_template, 'sidebar'); ?>>Yan Bar</option>
                     <option value="none" <?php selected($ui_template, 'none'); ?>>Gösterme</option>
                 </select>
-                <p class="description">UI tasarım bileşeninin sayfadaki konumu</p>
+                <p class="description">UI tasarım bileşeninin sayfadaki konumu (Manşet, Kararlar gibi özel bölümler için)</p>
             </td>
         </tr>
         <tr>
-            <th><label for="menu_order">Sıralama</label></th>
+            <th><label for="menu_order">🔢 Sıralama</label></th>
             <td>
                 <input type="number" id="menu_order" name="menu_order" 
                        value="<?php echo esc_attr($menu_order); ?>" 
                        class="small-text" min="0" />
-                <p class="description">Menüdeki sıralama (düşük sayı = üstte)</p>
+                <p class="description">Menüdeki sıralama (düşük sayı = üstte, örn: 0, 1, 2...)</p>
             </td>
         </tr>
         <tr>
-            <th><label for="mi_section_active">Aktif</label></th>
+            <th><label for="mi_section_active">✅ Aktif Durumu</label></th>
             <td>
                 <label>
                     <input type="checkbox" id="mi_section_active" name="mi_section_active" 
                            value="1" <?php checked($is_active, '1'); ?> />
-                    Bu bölümü menüde göster
+                    <strong>Bu bölümü menüde göster</strong>
                 </label>
+                <p class="description">İşaretlenirse bölüm menüde görünür, işaretlenmezse gizlenir.</p>
             </td>
         </tr>
     </table>
     
-    <h3>Sayfa Tipi Özel Ayarları</h3>
+    <h3>📋 Sayfa Tipi Özel Ayarları</h3>
+    <p class="description" style="margin-bottom: 20px;">Seçtiğiniz sayfa tipine göre özel ayarlar burada görünecektir.</p>
+    
     <div id="manset-settings" class="section-type-settings" style="display:none;">
+        <div class="notice notice-info inline" style="margin: 15px 0;">
+            <p><strong>💡 Manşet Bölümü:</strong> Bu bölüm haber listesini gösterir. Kategori, yazar ve sıralama filtreleri ile haberleri filtreleyebilirsiniz.</p>
+        </div>
         <table class="form-table">
             <tr>
-                <th><label>Filtreleme Seçenekleri</label></th>
+                <th><label>🔍 Filtreleme Seçenekleri</label></th>
                 <td>
-                    <label><input type="checkbox" name="manset_filter_category" value="1" checked /> Kategori</label><br>
-                    <label><input type="checkbox" name="manset_filter_author" value="1" checked /> Yazar</label><br>
-                    <label><input type="checkbox" name="manset_filter_sort" value="1" checked /> Sıralama</label>
+                    <fieldset>
+                        <label><input type="checkbox" name="manset_filter_category" value="1" checked /> Kategori Filtresi</label><br>
+                        <label><input type="checkbox" name="manset_filter_author" value="1" checked /> Yazar Filtresi</label><br>
+                        <label><input type="checkbox" name="manset_filter_sort" value="1" checked /> Sıralama Filtresi</label>
+                    </fieldset>
+                    <p class="description">Manşet sayfasında hangi filtrelerin gösterileceğini seçin.</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="manset_posts_per_page">📄 Sayfa Başına Haber Sayısı</label></th>
+                <td>
+                    <input type="number" id="manset_posts_per_page" name="manset_posts_per_page" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_manset_posts_per_page', true) ?: '12'); ?>" 
+                           class="small-text" min="1" max="50" />
+                    <p class="description">Bir sayfada gösterilecek haber sayısı (varsayılan: 12)</p>
                 </td>
             </tr>
         </table>
     </div>
     
     <div id="kararlar-settings" class="section-type-settings" style="display:none;">
+        <div class="notice notice-info inline" style="margin: 15px 0;">
+            <p><strong>💡 Kararlar Bölümü:</strong> Bu bölüm karar listesini gösterir. Dava türü, mahkeme ve sıralama filtreleri ile kararları filtreleyebilirsiniz.</p>
+        </div>
         <table class="form-table">
             <tr>
-                <th><label>Filtreleme Seçenekleri</label></th>
+                <th><label>🔍 Filtreleme Seçenekleri</label></th>
                 <td>
-                    <label><input type="checkbox" name="kararlar_filter_dava" value="1" checked /> Dava Türü</label><br>
-                    <label><input type="checkbox" name="kararlar_filter_mahkeme" value="1" checked /> Mahkeme</label><br>
-                    <label><input type="checkbox" name="kararlar_filter_sort" value="1" checked /> Sıralama</label>
+                    <fieldset>
+                        <label><input type="checkbox" name="kararlar_filter_dava" value="1" checked /> Dava Türü Filtresi</label><br>
+                        <label><input type="checkbox" name="kararlar_filter_mahkeme" value="1" checked /> Mahkeme Filtresi</label><br>
+                        <label><input type="checkbox" name="kararlar_filter_sort" value="1" checked /> Sıralama Filtresi</label>
+                    </fieldset>
+                    <p class="description">Kararlar sayfasında hangi filtrelerin gösterileceğini seçin.</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="kararlar_posts_per_page">📄 Sayfa Başına Karar Sayısı</label></th>
+                <td>
+                    <input type="number" id="kararlar_posts_per_page" name="kararlar_posts_per_page" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_kararlar_posts_per_page', true) ?: '12'); ?>" 
+                           class="small-text" min="1" max="50" />
+                    <p class="description">Bir sayfada gösterilecek karar sayısı (varsayılan: 12)</p>
                 </td>
             </tr>
         </table>
     </div>
     
     <div id="iletisim-settings" class="section-type-settings" style="display:none;">
+        <div class="notice notice-info inline" style="margin: 15px 0;">
+            <p><strong>💡 İletişim Bölümü:</strong> Bu bölüm iletişim bilgilerini ve yazı gönderme kurallarını gösterir.</p>
+        </div>
         <table class="form-table">
             <tr>
-                <th><label for="iletisim_email">E-posta Adresi</label></th>
+                <th><label for="iletisim_email">📧 E-posta Adresi</label></th>
                 <td>
                     <input type="email" id="iletisim_email" name="iletisim_email" 
-                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_email', true)); ?>" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_email', true) ?: get_option('admin_email')); ?>" 
                            class="regular-text" />
+                    <p class="description">İletişim sayfasında gösterilecek e-posta adresi</p>
                 </td>
             </tr>
             <tr>
-                <th><label for="iletisim_response_time">Yanıt Süresi</label></th>
+                <th><label for="iletisim_response_time">⏰ Yanıt Süresi</label></th>
                 <td>
                     <input type="text" id="iletisim_response_time" name="iletisim_response_time" 
                            value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_response_time', true) ?: '24-48 Saat'); ?>" 
+                           class="regular-text" placeholder="24-48 Saat" />
+                    <p class="description">Mesajlara yanıt verme süresi bilgisi (örn: "24-48 Saat", "1-2 İş Günü")</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_intro_title">📝 Giriş Başlığı</label></th>
+                <td>
+                    <input type="text" id="iletisim_intro_title" name="iletisim_intro_title" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_intro_title', true) ?: 'Yazılarınızı Paylaşın'); ?>" 
                            class="regular-text" />
+                    <p class="description">İletişim bölümünün üst kısmında gösterilecek ana başlık</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_intro_text">📄 Giriş Metni</label></th>
+                <td>
+                    <textarea id="iletisim_intro_text" name="iletisim_intro_text" 
+                              class="large-text" rows="3"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_intro_text', true) ?: 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.'); ?></textarea>
+                    <p class="description">İletişim bölümünün üst kısmında gösterilecek açıklama metni</p>
                 </td>
             </tr>
         </table>
@@ -219,6 +279,16 @@ function mi_save_section_meta_box($post_id) {
         update_post_meta($post_id, '_mi_section_active', '0');
     }
 
+    // Manşet özel ayarları
+    if (isset($_POST['manset_posts_per_page'])) {
+        update_post_meta($post_id, '_mi_manset_posts_per_page', intval($_POST['manset_posts_per_page']));
+    }
+    
+    // Kararlar özel ayarları
+    if (isset($_POST['kararlar_posts_per_page'])) {
+        update_post_meta($post_id, '_mi_kararlar_posts_per_page', intval($_POST['kararlar_posts_per_page']));
+    }
+    
     // İletişim özel ayarları
     if (isset($_POST['iletisim_email'])) {
         update_post_meta($post_id, '_mi_iletisim_email', sanitize_email($_POST['iletisim_email']));
@@ -226,6 +296,14 @@ function mi_save_section_meta_box($post_id) {
 
     if (isset($_POST['iletisim_response_time'])) {
         update_post_meta($post_id, '_mi_iletisim_response_time', sanitize_text_field($_POST['iletisim_response_time']));
+    }
+    
+    if (isset($_POST['iletisim_intro_title'])) {
+        update_post_meta($post_id, '_mi_iletisim_intro_title', sanitize_text_field($_POST['iletisim_intro_title']));
+    }
+    
+    if (isset($_POST['iletisim_intro_text'])) {
+        update_post_meta($post_id, '_mi_iletisim_intro_text', sanitize_textarea_field($_POST['iletisim_intro_text']));
     }
 }
 add_action('save_post', 'mi_save_section_meta_box');
@@ -238,6 +316,7 @@ function mi_section_columns($columns) {
     $new_columns['section_type'] = 'Sayfa Tipi';
     $new_columns['menu_order'] = 'Sıralama';
     $new_columns['active'] = 'Aktif';
+    $new_columns['quick_edit'] = 'Hızlı İşlemler';
     $new_columns['date'] = $columns['date'];
     return $new_columns;
 }
@@ -249,16 +328,35 @@ function mi_section_column_content($column, $post_id) {
             $type = get_post_meta($post_id, '_mi_section_type', true);
             $types = array(
                 'default' => 'Varsayılan',
+                'aciklama' => 'Açıklama',
                 'manset' => 'Manşet',
                 'kararlar' => 'Kararlar',
                 'iletisim' => 'İletişim',
                 'custom' => 'Özel'
             );
-            echo isset($types[$type]) ? $types[$type] : 'Varsayılan';
+            $type_label = isset($types[$type]) ? $types[$type] : 'Varsayılan';
+            $type_icons = array(
+                'default' => '📄',
+                'aciklama' => '📝',
+                'manset' => '📰',
+                'kararlar' => '⚖️',
+                'iletisim' => '📧',
+                'custom' => '🎨'
+            );
+            $icon = isset($type_icons[$type]) ? $type_icons[$type] : '📄';
+            echo '<span style="font-size: 18px;">' . $icon . '</span> ' . $type_label;
             break;
         case 'active':
             $active = get_post_meta($post_id, '_mi_section_active', true);
-            echo $active == '1' ? '<span style="color:green;">✓ Aktif</span>' : '<span style="color:red;">✗ Pasif</span>';
+            echo $active == '1' ? '<span style="color:green; font-weight: bold;">✓ Aktif</span>' : '<span style="color:red; font-weight: bold;">✗ Pasif</span>';
+            break;
+        case 'quick_edit':
+            $edit_url = get_edit_post_link($post_id);
+            $view_url = get_permalink($post_id);
+            echo '<div style="display: flex; gap: 5px; flex-wrap: wrap;">';
+            echo '<a href="' . esc_url($edit_url) . '" class="button button-small" title="Düzenle">✏️ Düzenle</a>';
+            echo '<a href="' . esc_url($view_url) . '" class="button button-small" target="_blank" title="Görüntüle">👁️ Görüntüle</a>';
+            echo '</div>';
             break;
     }
 }

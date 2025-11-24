@@ -56,6 +56,9 @@ function mi_render_section_template($post) {
     $section_type = mi_get_section_type($post->ID);
     
     switch ($section_type) {
+        case 'aciklama':
+            get_template_part('templates/section', 'aciklama');
+            break;
         case 'manset':
             get_template_part('templates/section', 'manset');
             break;

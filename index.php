@@ -52,7 +52,18 @@ get_header();
                             </div>
                             
                             <div class="post-excerpt">
-                                <?php the_excerpt(); ?>
+                                <?php 
+                                // Manuel excerpt varsa onu kullan, yoksa içerikten oluştur (sadece bir kere)
+                                if (has_excerpt()) {
+                                    echo wp_kses_post(get_the_excerpt());
+                                } else {
+                                    // İçerikten excerpt oluştur (sadece metin, HTML yok)
+                                    $content = get_the_content();
+                                    $content = strip_tags($content);
+                                    $excerpt = wp_trim_words($content, 30, '...');
+                                    echo esc_html($excerpt);
+                                }
+                                ?>
                             </div>
                             
                             <div class="post-actions">

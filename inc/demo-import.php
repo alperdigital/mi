@@ -39,11 +39,11 @@ function mi_demo_import_page() {
             
             <h3><?php _e('İçe Aktarılacaklar:', 'mi-theme'); ?></h3>
             <ul style="list-style: disc; margin-left: 30px;">
-                <li><?php _e('Örnek Sayfalar', 'mi-theme'); ?></li>
-                <li><?php _e('Örnek Yazılar', 'mi-theme'); ?></li>
-                <li><?php _e('Örnek Bölümler (MANŞET, KARARLAR, İLETİŞİM)', 'mi-theme'); ?></li>
-                <li><?php _e('Örnek Kategoriler', 'mi-theme'); ?></li>
-                <li><?php _e('Örnek Etiketler', 'mi-theme'); ?></li>
+                <li><?php _e('Ana Sayfa: Başyazı (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('Bölüm 2: Yazılar (Haber listesi)', 'mi-theme'); ?></li>
+                <li><?php _e('Bölüm 3: #EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('Bölüm 4: İletişim', 'mi-theme'); ?></li>
+                <li><?php _e('Örnek Yazılar ve Kategoriler', 'mi-theme'); ?></li>
             </ul>
             
             <p class="submit">
@@ -114,28 +114,45 @@ function mi_import_demo_content() {
     // Create sample sections
     $sections = array(
         array(
-            'title' => 'MANŞET',
-            'name' => 'MANŞET',
-            'type' => 'manset',
-            'content' => 'Güncel haberler ve gelişmeler',
+            'title' => 'Başyazı',
+            'name' => 'Başyazı',
+            'type' => 'aciklama',
+            'content' => '<p>Demokrasi, özgürlük ve adalet için mücadele eden tüm insanların sesi olmak, hak ve özgürlüklerin korunması için çalışmak temel görevimizdir. Toplumun her kesiminden gelen görüşlere açığız ve farklılıklarımızı zenginlik olarak görüyoruz.</p>
+<p>Güncel gelişmeleri takip ederken, objektif ve tarafsız bir bakış açısıyla haberleri sunmayı hedefliyoruz. Toplumsal sorunlara duyarlı, çözüm odaklı bir yaklaşım benimsiyoruz.</p>
+<p>Yazılarınızı, görüşlerinizi ve önerilerinizi bizimle paylaşabilirsiniz. Birlikte daha iyi bir gelecek inşa edebiliriz.</p>',
             'active' => '1',
-            'order' => 1,
+            'order' => 0,
         ),
         array(
-            'title' => 'KARARLAR',
-            'name' => 'KARARLAR',
-            'type' => 'kararlar',
-            'content' => 'Yargıtay kararları ve hukuki gelişmeler',
+            'title' => 'Yazılar',
+            'name' => 'Yazılar',
+            'type' => 'manset',
+            'content' => 'Güncel yazılar ve haberler',
+            'active' => '1',
+            'order' => 1,
+            'posts_per_page' => 12,
+        ),
+        array(
+            'title' => '#EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük',
+            'name' => '#EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük',
+            'type' => 'aciklama',
+            'content' => '<p>Demokrasinin temel değerleri olan ifade özgürlüğü, düşünce özgürlüğü ve siyasi katılım hakkı, herkes için eşit ve koşulsuz olmalıdır. Siyasi görüşleri nedeniyle tutuklanan, yargılanan veya cezalandırılan hiç kimse olmamalıdır.</p>
+<p>Ekrem İmamoğlu ve tüm siyasi tutsakların derhal serbest bırakılmasını talep ediyoruz. Adil yargılanma hakkı, savunma hakkı ve masumiyet karinesi herkes için geçerli olmalıdır.</p>
+<p>Özgürlük, demokrasinin olmazsa olmazıdır. Siyasi görüşlerin cezalandırılması, demokrasinin temel ilkeleriyle bağdaşmaz. Tüm siyasi tutsakların özgürlüğüne kavuşması için mücadele etmeye devam edeceğiz.</p>',
             'active' => '1',
             'order' => 2,
         ),
         array(
-            'title' => 'İLETİŞİM',
-            'name' => 'İLETİŞİM',
+            'title' => 'İletişim',
+            'name' => 'İletişim',
             'type' => 'iletisim',
             'content' => 'Bizimle iletişime geçin',
             'active' => '1',
             'order' => 3,
+            'email' => get_option('admin_email'),
+            'response_time' => '24-48 Saat',
+            'intro_title' => 'Yazılarınızı Paylaşın',
+            'intro_text' => 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.',
         ),
     );
     
@@ -154,9 +171,21 @@ function mi_import_demo_content() {
             update_post_meta($section_id, '_mi_section_active', $section_data['active']);
             update_post_meta($section_id, '_mi_ui_template', 'top');
             
+            // Manşet özel ayarları
+            if ($section_data['type'] === 'manset' && isset($section_data['posts_per_page'])) {
+                update_post_meta($section_id, '_mi_manset_posts_per_page', intval($section_data['posts_per_page']));
+            }
+            
+            // İletişim özel ayarları
             if ($section_data['type'] === 'iletisim') {
-                update_post_meta($section_id, '_mi_iletisim_email', get_option('admin_email'));
-                update_post_meta($section_id, '_mi_iletisim_response_time', '24-48 Saat');
+                update_post_meta($section_id, '_mi_iletisim_email', isset($section_data['email']) ? $section_data['email'] : get_option('admin_email'));
+                update_post_meta($section_id, '_mi_iletisim_response_time', isset($section_data['response_time']) ? $section_data['response_time'] : '24-48 Saat');
+                if (isset($section_data['intro_title'])) {
+                    update_post_meta($section_id, '_mi_iletisim_intro_title', $section_data['intro_title']);
+                }
+                if (isset($section_data['intro_text'])) {
+                    update_post_meta($section_id, '_mi_iletisim_intro_text', $section_data['intro_text']);
+                }
             }
         }
     }

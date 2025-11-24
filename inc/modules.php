@@ -54,7 +54,8 @@ function mi_reading_time_module() {
     }
     
     function mi_display_reading_time() {
-        if (is_single() && function_exists('mi_calculate_reading_time')) {
+        // Okuma süresi sadece single post sayfalarında gösterilsin, section template'lerinde değil
+        if (is_single() && !is_singular('mi_section') && function_exists('mi_calculate_reading_time')) {
             $content = get_the_content();
             $reading_time = mi_calculate_reading_time($content);
             if ($reading_time) {

@@ -1,77 +1,25 @@
 <?php
 /**
- * Template: İletişim (Form)
+ * Template: İletişim
  */
 
 $post_id = get_the_ID();
+$is_front_page = is_front_page();
 $contact_email = get_post_meta($post_id, '_mi_iletisim_email', true) ?: get_option('admin_email');
 $response_time = get_post_meta($post_id, '_mi_iletisim_response_time', true) ?: '24-48 Saat';
+$intro_title = get_post_meta($post_id, '_mi_iletisim_intro_title', true) ?: 'Yazılarınızı Paylaşın';
+$intro_text = get_post_meta($post_id, '_mi_iletisim_intro_text', true) ?: 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.';
 ?>
 
-<div class="iletisim-section">
+<div class="iletisim-section <?php echo $is_front_page ? 'front-page-iletisim' : ''; ?>">
     <div class="iletisim-intro">
         <div class="intro-icon">📧</div>
         <h2>Bize Ulaşın</h2>
-        <h1>Yazılarınızı Paylaşın</h1>
-        <p>Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.</p>
+        <h1><?php echo esc_html($intro_title); ?></h1>
+        <p><?php echo esc_html($intro_text); ?></p>
     </div>
     
     <div class="iletisim-content">
-        <div class="iletisim-form-wrapper">
-            <h2>✍️ Bize Yazın</h2>
-            <p>Aşağıdaki formu doldurarak bizimle iletişime geçebilirsiniz. Yazılarınız, görüşleriniz ve önerileriniz değerlendirilerek yayınlanabilir.</p>
-            
-            <form id="iletisim-form" class="iletisim-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                <?php wp_nonce_field('mi_contact_form', 'mi_contact_nonce'); ?>
-                <input type="hidden" name="action" value="mi_handle_contact_form">
-                
-                <div class="form-group">
-                    <label for="contact-name">👤 Adınız Soyadınız</label>
-                    <input type="text" id="contact-name" name="contact_name" 
-                           placeholder="Adınız ve soyadınız" required />
-                </div>
-                
-                <div class="form-group">
-                    <label for="contact-email">📧 E-posta Adresiniz</label>
-                    <input type="email" id="contact-email" name="contact_email" 
-                           placeholder="ornek@email.com" required />
-                    <p class="form-hint">Yazınız yayınlandığında size bilgi verilecektir.</p>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contact-subject">📝 Konu</label>
-                    <select id="contact-subject" name="contact_subject" required>
-                        <option value="">Konu seçiniz</option>
-                        <option value="yazi-gonderimi">Yazı Gönderimi</option>
-                        <option value="gorus-oneri">Görüş ve Öneri</option>
-                        <option value="soru">Soru</option>
-                        <option value="diger">Diğer</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contact-message">💬 Mesajınız / Yazınız</label>
-                    <textarea id="contact-message" name="contact_message" rows="8" 
-                              placeholder="Mesajınızı veya yazınızı buraya yazın..." required></textarea>
-                    <p class="form-hint">
-                        <strong>💡 İpucu:</strong> Yazılarınız yayınlanmak üzere değerlendirilecektir. Yazılarınızın orijinal ve özgün olması önemlidir.
-                    </p>
-                </div>
-                
-                <div class="form-group checkbox-group">
-                    <label>
-                        <input type="checkbox" name="publish_permission" value="1" required />
-                        Yazımın yayınlanmasına izin veriyorum
-                    </label>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    <span>📤</span>
-                    <span>Gönder</span>
-                </button>
-            </form>
-        </div>
-        
         <div class="iletisim-info">
             <h2>📞 İletişim Bilgileri</h2>
             
@@ -151,30 +99,4 @@ $response_time = get_post_meta($post_id, '_mi_iletisim_response_time', true) ?: 
     </div>
 </div>
 
-<?php
-// Handle form submission
-function mi_handle_contact_form() {
-    if (!isset($_POST['mi_contact_nonce']) || !wp_verify_nonce($_POST['mi_contact_nonce'], 'mi_contact_form')) {
-        wp_die('Güvenlik kontrolü başarısız.');
-    }
-    
-    $name = sanitize_text_field($_POST['contact_name']);
-    $email = sanitize_email($_POST['contact_email']);
-    $subject = sanitize_text_field($_POST['contact_subject']);
-    $message = sanitize_textarea_field($_POST['contact_message']);
-    $publish_permission = isset($_POST['publish_permission']) ? 'Evet' : 'Hayır';
-    
-    // Email gönder
-    $to = get_option('admin_email');
-    $email_subject = 'Yeni İletişim Formu: ' . $subject;
-    $email_body = "Ad Soyad: $name\nE-posta: $email\nKonu: $subject\n\nMesaj:\n$message\n\nYayın İzni: $publish_permission";
-    
-    wp_mail($to, $email_subject, $email_body, array('From: ' . $name . ' <' . $email . '>'));
-    
-    wp_redirect(add_query_arg('contact', 'success', wp_get_referer()));
-    exit;
-}
-add_action('admin_post_mi_handle_contact_form', 'mi_handle_contact_form');
-add_action('admin_post_nopriv_mi_handle_contact_form', 'mi_handle_contact_form');
-?>
 
