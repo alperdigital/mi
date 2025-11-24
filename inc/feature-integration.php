@@ -15,21 +15,17 @@ add_action('wp', 'mi_integrate_post_views');
 function mi_integrate_reading_time() {
     if (get_option('mi_enable_reading_time', 1) && is_single()) {
         add_filter('the_content', function($content) {
-            $reading_time = mi_calculate_reading_time($content);
-            if ($reading_time) {
-                $time_html = '<div class="reading-time">⏱️ ' . $reading_time . ' dakika okuma süresi</div>';
-                $content = $time_html . $content;
+            // Check if function exists (defined in modules.php)
+            if (function_exists('mi_calculate_reading_time')) {
+                $reading_time = mi_calculate_reading_time($content);
+                if ($reading_time) {
+                    $time_html = '<div class="reading-time">⏱️ ' . $reading_time . ' dakika okuma süresi</div>';
+                    $content = $time_html . $content;
+                }
             }
             return $content;
         }, 5);
     }
-}
-
-// Calculate reading time
-function mi_calculate_reading_time($content) {
-    $word_count = str_word_count(strip_tags($content));
-    $reading_time = ceil($word_count / 200); // Average reading speed: 200 words per minute
-    return $reading_time > 0 ? $reading_time : null;
 }
 
 // Integrate related posts with theme options

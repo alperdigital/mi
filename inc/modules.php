@@ -38,23 +38,28 @@ class MI_Module_Loader {
 // Load modules
 add_action('after_setup_theme', array('MI_Module_Loader', 'load_modules'));
 
+// Calculate reading time (global function)
+if (!function_exists('mi_calculate_reading_time')) {
+    function mi_calculate_reading_time($content) {
+        $word_count = str_word_count(strip_tags($content));
+        $reading_time = ceil($word_count / 200); // Average reading speed: 200 words per minute
+        return $reading_time > 0 ? $reading_time : null;
+    }
+}
+
 // Reading time module
 function mi_reading_time_module() {
     if (!get_option('mi_enable_reading_time', 1)) {
         return;
     }
     
-    function mi_calculate_reading_time($content) {
-        $word_count = str_word_count(strip_tags($content));
-        $reading_time = ceil($word_count / 200); // Average reading speed: 200 words per minute
-        return $reading_time;
-    }
-    
     function mi_display_reading_time() {
-        if (is_single()) {
+        if (is_single() && function_exists('mi_calculate_reading_time')) {
             $content = get_the_content();
             $reading_time = mi_calculate_reading_time($content);
-            echo '<span class="reading-time">⏱️ ' . $reading_time . ' dakika okuma süresi</span>';
+            if ($reading_time) {
+                echo '<span class="reading-time">⏱️ ' . $reading_time . ' dakika okuma süresi</span>';
+            }
         }
     }
     add_action('mi_post_meta', 'mi_display_reading_time', 5);
