@@ -776,6 +776,16 @@ footer p {
     color: var(--text-dark);
 }
 
+/* Front page için özel stiller */
+.front-page-section .aciklama-content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+    font-size: 18px;
+    color: var(--text-dark);
+}
+
 .aciklama-content-wrapper p {
     margin-bottom: 20px;
     text-align: justify;
