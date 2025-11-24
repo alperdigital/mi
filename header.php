@@ -15,16 +15,42 @@
                 <?php endif; ?>
             </div>
             
+            <?php if (is_active_sidebar('header-widget')) : ?>
+                <div class="header-widget-area">
+                    <?php dynamic_sidebar('header-widget'); ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php mi_mobile_menu_toggle(); ?>
+            
             <nav class="main-navigation">
                 <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'primary',
-                    'menu_class' => 'nav-menu',
-                    'container' => false,
-                    'fallback_cb' => 'default_nav_menu',
-                ));
+                $sections = mi_get_active_sections();
+                if (!empty($sections)) {
+                    echo '<ul class="nav-menu">';
+                    foreach ($sections as $section) {
+                        $section_name = mi_get_section_name($section->ID);
+                        $section_url = get_permalink($section->ID);
+                        $current_class = (is_singular('mi_section') && get_the_ID() == $section->ID) ? 'current-menu-item' : '';
+                        echo '<li class="' . esc_attr($current_class) . '"><a href="' . esc_url($section_url) . '">' . esc_html($section_name) . '</a></li>';
+                    }
+                    echo '</ul>';
+                } else {
+                    wp_nav_menu(array(
+                        'theme_location' => 'primary',
+                        'menu_class' => 'nav-menu',
+                        'container' => false,
+                        'fallback_cb' => 'default_nav_menu',
+                    ));
+                }
                 ?>
             </nav>
+            
+            <?php if (get_theme_mod('mi_show_social_header', true)) : ?>
+                <div class="header-social">
+                    <?php mi_render_social_links(); ?>
+                </div>
+            <?php endif; ?>
         </div>
     </header>
     

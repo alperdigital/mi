@@ -8,7 +8,15 @@ get_header();
 
 <main>
     <div class="container">
+        <div class="content-wrapper <?php echo mi_has_sidebar() ? 'has-sidebar' : 'no-sidebar'; ?>">
+            <div class="main-content">
         <?php if (have_posts()) : ?>
+            <?php if (get_theme_mod('mi_enable_masonry', false)) : ?>
+                <?php 
+                $columns = get_theme_mod('mi_masonry_columns', '3');
+                mi_render_masonry_grid(null, $columns);
+                ?>
+            <?php else : ?>
             <div class="posts-container">
                 <?php while (have_posts()) : the_post(); ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
@@ -47,28 +55,42 @@ get_header();
                                 <?php the_excerpt(); ?>
                             </div>
                             
-                            <div class="post-read-more">
-                                <a href="<?php the_permalink(); ?>" class="read-more-link">Devamını Oku →</a>
+                            <div class="post-actions">
+                                <div class="post-read-more">
+                                    <a href="<?php the_permalink(); ?>" class="read-more-link">Devamını Oku →</a>
+                                </div>
+                                <div class="post-share-inline">
+                                    <?php mi_render_social_share(get_the_ID(), true); ?>
+                                </div>
                             </div>
                         </div>
                     </article>
                 <?php endwhile; ?>
             </div>
+            <?php endif; ?>
             
-            <div class="pagination">
-                <?php
-                the_posts_pagination(array(
-                    'prev_text' => '&laquo; Önceki',
-                    'next_text' => 'Sonraki &raquo;',
-                    'mid_size' => 2,
-                ));
-                ?>
-            </div>
+            <?php if (have_posts()) : ?>
+                <div class="pagination">
+                    <?php
+                    the_posts_pagination(array(
+                        'prev_text' => '&laquo; Önceki',
+                        'next_text' => 'Sonraki &raquo;',
+                        'mid_size' => 2,
+                    ));
+                    ?>
+                </div>
+            <?php endif; ?>
         <?php else : ?>
             <div class="no-posts">
                 <p>Henüz içerik bulunmamaktadır.</p>
             </div>
         <?php endif; ?>
+            </div>
+            
+            <?php if (mi_has_sidebar()) : ?>
+                <?php get_sidebar(); ?>
+            <?php endif; ?>
+        </div>
     </div>
 </main>
 
