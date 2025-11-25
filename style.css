@@ -2396,37 +2396,6 @@ body.menu-open {
         text-align: center;
         font-size: 16px;
     }
-    
-    /* Mobil görünümde section başlıkları */
-    .section-title {
-        font-size: 24px !important;
-        text-align: center;
-    }
-    
-    /* Mobil görünümde manset articles */
-    .manset-articles {
-        grid-template-columns: 1fr !important;
-        gap: 15px;
-    }
-    
-    .manset-article {
-        padding: 15px;
-        min-height: auto;
-    }
-    
-    /* Mobil görünümde container padding */
-    .container {
-        padding: 0 15px;
-    }
-    
-    /* Mobil görünümde front-page sections */
-    .front-page-section {
-        padding: 30px 0 !important;
-    }
-    
-    .section-header {
-        margin-bottom: 30px;
-    }
 }
 
 /* Scroll to Top */
