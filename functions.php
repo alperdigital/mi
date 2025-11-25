@@ -140,16 +140,6 @@ function mi_body_classes($classes) {
 }
 add_filter('body_class', 'mi_body_classes');
 
-// Add data attribute for single page mode
-function mi_body_data_attributes($attr) {
-    $single_page_mode = get_option('mi_enable_single_page', 0) === 1;
-    if ($single_page_mode) {
-        $attr .= ' data-single-page-mode="1"';
-    }
-    return $attr;
-}
-add_filter('body_attributes', 'mi_body_data_attributes');
-
 // Include admin sections
 require_once get_template_directory() . '/admin-sections.php';
 
