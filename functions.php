@@ -231,6 +231,9 @@ require_once get_template_directory() . '/inc/parallax.php';
 // Include Demo Import
 require_once get_template_directory() . '/inc/demo-import.php';
 
+// Include AJAX Handlers
+require_once get_template_directory() . '/inc/ajax-handlers.php';
+
 // Include Admin UI
 require_once get_template_directory() . '/inc/admin-ui.php';
 
