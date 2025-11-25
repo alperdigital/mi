@@ -4062,12 +4062,35 @@ code[class*="language-"] {
     
     .manset-article,
     .karar-article {
-        padding: 20px;
+        padding: 15px;
+        min-height: auto;
     }
     
     .article-title,
     .karar-title {
-        font-size: 20px;
+        font-size: 18px;
+    }
+    
+    .article-excerpt {
+        font-size: 13px;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+    }
+    
+    .article-footer {
+        font-size: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .article-date {
+        text-align: left;
+    }
+    
+    .article-read-more {
+        font-size: 13px;
+        padding: 8px 16px;
     }
     
     .aciklama-content-wrapper {
