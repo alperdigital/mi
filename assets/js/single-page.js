@@ -5,7 +5,7 @@
     'use strict';
     
     $(document).ready(function() {
-        var singlePageMode = $('body').data('single-page-mode');
+        var singlePageMode = $('body').data('single-page-mode') === '1' || $('body').data('single-page-mode') === 1;
         
         if (!singlePageMode) {
             return; // Tek sayfa modu kapalıysa çalışma

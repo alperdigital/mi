@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php 
+    body_class(); 
+    $single_page_mode = get_option('mi_enable_single_page', 0) === 1;
+    if ($single_page_mode) {
+        echo ' data-single-page-mode="1"';
+    }
+?>>
     <header>
         <div class="container">
             <div class="header-top">
