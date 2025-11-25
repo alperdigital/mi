@@ -93,6 +93,24 @@ function mi_get_section_name($post_id) {
         if (mb_strpos($name, 'İLETIŞIM') !== false) {
             $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
         }
+        
+        // CSS text-transform: uppercase sorunu için ek düzeltme
+        // Eğer string'de "İLETIŞIM" (I karakteri İngilizce) varsa, tüm I'ları İ ile değiştir
+        // Ancak sadece Türkçe kelimelerde (İletişim, İçerik, İlgili, vb.)
+        $turkish_words = array(
+            'İLETIŞIM' => 'İLETİŞİM',
+            'İLETIŞIM' => 'İLETİŞİM',
+            'IÇERIK' => 'İÇERİK',
+            'ILGILI' => 'İLGİLİ',
+            'IPUCU' => 'İPUCU',
+            'IŞ' => 'İŞ',
+            'ICRA' => 'İCRA',
+            'IDARE' => 'İDARE',
+        );
+        
+        foreach ($turkish_words as $wrong => $correct) {
+            $name = str_replace($wrong, $correct, $name);
+        }
     }
     
     return $name ?: 'Bölüm';
