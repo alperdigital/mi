@@ -82,23 +82,25 @@ $default_sort = get_post_meta($post_id, '_mi_manset_default_sort', true) ?: 'dat
                     $args['orderby'] = 'date';
                     $args['order'] = 'ASC';
                     break;
-                case 'editor-choice':
-                    // Editörün seçimi: menu_order veya featured post'lar
-                    $args['orderby'] = 'menu_order';
-                    $args['order'] = 'ASC';
-                    $args['meta_query'] = array(
-                        'relation' => 'OR',
-                        array(
-                            'key' => '_mi_featured_post',
-                            'value' => '1',
-                            'compare' => '='
-                        ),
-                        array(
-                            'key' => '_mi_featured_post',
-                            'compare' => 'NOT EXISTS'
-                        )
-                    );
-                    break;
+            case 'editor-choice':
+                // Editörün seçimi: menu_order veya featured post'lar
+                // Önce featured post'ları, sonra menu_order'a göre sırala
+                $args['orderby'] = 'menu_order';
+                $args['order'] = 'ASC';
+                // Featured post'ları önceliklendirmek için meta query ekle
+                $args['meta_query'] = array(
+                    'relation' => 'OR',
+                    array(
+                        'key' => '_mi_featured_post',
+                        'value' => '1',
+                        'compare' => '='
+                    ),
+                    array(
+                        'key' => '_mi_featured_post',
+                        'compare' => 'NOT EXISTS'
+                    )
+                );
+                break;
                 default:
                     $args['orderby'] = 'date';
                     $args['order'] = 'DESC';
