@@ -49,8 +49,6 @@ $post_id = get_the_ID();
                 <option value="number-desc">Karar No (Z → A)</option>
             </select>
         </div>
-        
-        <button type="button" class="filter-reset-btn" id="reset-filters">🔄 Sıfırla</button>
     </div>
     
     <div class="kararlar-loading" id="kararlar-loading" style="display: none;">
@@ -193,13 +191,7 @@ jQuery(document).ready(function($) {
         loadKararlar(currentPage, dava, mahkeme, sort);
     });
     
-    $('#reset-filters').on('click', function() {
-        $('#filter-dava').val('');
-        $('#filter-mahkeme').val('');
-        $('#filter-sort').val('date-desc');
-        currentPage = 1;
-        loadKararlar(currentPage, '', '', 'date-desc');
-    });
+    // Sıfırla butonu kaldırıldı
     
     $(document).on('click', '.kararlar-pagination a', function(e) {
         e.preventDefault();

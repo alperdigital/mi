@@ -68,8 +68,6 @@ $enable_comments = get_post_meta($post_id, '_mi_manset_enable_comments', true) =
                 </select>
             </div>
             <?php endif; ?>
-            
-            <button type="button" class="filter-reset-btn" id="reset-filters">🔄 Sıfırla</button>
         </div>
         
         <div class="manset-loading" id="manset-loading" style="display: none;">
@@ -240,13 +238,7 @@ jQuery(document).ready(function($) {
     });
     <?php endif; ?>
     
-    $('#reset-filters').on('click', function() {
-        <?php if ($show_category) : ?>$('#filter-category').val('');<?php endif; ?>
-        <?php if ($show_author) : ?>$('#filter-author').val('');<?php endif; ?>
-        <?php if ($show_sort) : ?>$('#filter-sort').val(defaultSort);<?php endif; ?>
-        currentPage = 1;
-        loadArticles(currentPage, '', '', defaultSort);
-    });
+    // Sıfırla butonu kaldırıldı
     
     $(document).on('click', '.pagination-link', function(e) {
         e.preventDefault();

@@ -15,16 +15,7 @@ get_header();
             
             <article id="post-<?php the_ID(); ?>" <?php post_class('single-post'); ?>>
                 <header class="post-header">
-                    <?php if (get_the_category()) : ?>
-                        <div class="post-category-badge">
-                            <?php
-                            $categories = get_the_category();
-                            if (!empty($categories)) {
-                                echo '<a href="' . esc_url(get_category_link($categories[0]->term_id)) . '">' . esc_html($categories[0]->name) . '</a>';
-                            }
-                            ?>
-                        </div>
-                    <?php endif; ?>
+                    <?php // Kategori badge kaldırıldı ?>
                     
                     <h1 class="post-title"><?php the_title(); ?></h1>
                     
