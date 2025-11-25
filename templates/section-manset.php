@@ -12,10 +12,17 @@ $show_author = get_post_meta($post_id, '_mi_manset_filter_author', true) !== '0'
 $show_sort = get_post_meta($post_id, '_mi_manset_filter_sort', true) !== '0'; // Default: göster
 $default_sort = get_post_meta($post_id, '_mi_manset_default_sort', true) ?: 'date-desc';
 
-// Haber detayları görünürlük ayarları
-$show_views = get_post_meta($post_id, '_mi_manset_show_views', true) === '1';
-$show_reading_time = get_post_meta($post_id, '_mi_manset_show_reading_time', true) === '1';
-$show_category_badge = get_post_meta($post_id, '_mi_manset_show_category', true) === '1';
+// Görüntüleme seçenekleri
+$show_category_badge = get_post_meta($post_id, '_mi_manset_show_category', true) === '1'; // Default: kapalı
+$show_views = get_post_meta($post_id, '_mi_manset_show_views', true) === '1'; // Default: kapalı
+$show_reading_time = get_post_meta($post_id, '_mi_manset_show_reading_time', true) === '1'; // Default: kapalı
+$enable_comments = get_post_meta($post_id, '_mi_manset_enable_comments', true) === '1'; // Default: kapalı
+
+// Görüntüleme seçenekleri
+$show_category_badge = get_post_meta($post_id, '_mi_manset_show_category', true) === '1'; // Default: kapalı
+$show_views = get_post_meta($post_id, '_mi_manset_show_views', true) === '1'; // Default: kapalı
+$show_reading_time = get_post_meta($post_id, '_mi_manset_show_reading_time', true) === '1'; // Default: kapalı
+$enable_comments = get_post_meta($post_id, '_mi_manset_enable_comments', true) === '1'; // Default: kapalı
 ?>
 
 <div class="manset-section <?php echo $is_front_page ? 'front-page-manset' : ''; ?>">

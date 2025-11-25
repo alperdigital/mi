@@ -21,16 +21,16 @@ if (!function_exists('mi_filter_manset_articles')) {
         $sort = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'date-desc';
         $section_id = isset($_POST['section_id']) ? intval($_POST['section_id']) : 0;
         
-    $posts_per_page = 12;
-    $show_views = false;
-    $show_reading_time = false;
-    $show_category_badge = false;
-    if ($section_id > 0) {
-        $posts_per_page = get_post_meta($section_id, '_mi_manset_posts_per_page', true) ?: 12;
-        $show_views = get_post_meta($section_id, '_mi_manset_show_views', true) === '1';
-        $show_reading_time = get_post_meta($section_id, '_mi_manset_show_reading_time', true) === '1';
-        $show_category_badge = get_post_meta($section_id, '_mi_manset_show_category', true) === '1';
-    }
+        $posts_per_page = 12;
+        $show_category_badge = false;
+        $show_views = false;
+        $show_reading_time = false;
+        if ($section_id > 0) {
+            $posts_per_page = get_post_meta($section_id, '_mi_manset_posts_per_page', true) ?: 12;
+            $show_category_badge = get_post_meta($section_id, '_mi_manset_show_category', true) === '1';
+            $show_views = get_post_meta($section_id, '_mi_manset_show_views', true) === '1';
+            $show_reading_time = get_post_meta($section_id, '_mi_manset_show_reading_time', true) === '1';
+        }
         
         $args = array(
             'post_type' => 'post',

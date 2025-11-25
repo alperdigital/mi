@@ -237,6 +237,11 @@ class MI_Archive_Widget extends WP_Widget {
     }
     
     public function widget($args, $instance) {
+        // Widget görünürlük kontrolü
+        if (get_option('mi_show_archives_widget', 1) != 1) {
+            return; // Widget kapalıysa gösterilmez
+        }
+        
         $title = !empty($instance['title']) ? $instance['title'] : __('Arşiv', 'mi-theme');
         $count = !empty($instance['count']) ? 1 : 0;
         $dropdown = !empty($instance['dropdown']) ? 1 : 0;
@@ -244,16 +249,34 @@ class MI_Archive_Widget extends WP_Widget {
         echo $args['before_widget'];
         echo $args['before_title'] . esc_html($title) . $args['after_title'];
         
+        // Türkçe ay isimleri
+        $turkish_months = array(
+            'January' => 'Ocak', 'February' => 'Şubat', 'March' => 'Mart',
+            'April' => 'Nisan', 'May' => 'Mayıs', 'June' => 'Haziran',
+            'July' => 'Temmuz', 'August' => 'Ağustos', 'September' => 'Eylül',
+            'October' => 'Ekim', 'November' => 'Kasım', 'December' => 'Aralık'
+        );
+        
         if ($dropdown) {
             ?>
             <select name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
-                <option value=""><?php _e('Tarih Seçin', 'mi-theme'); ?></option>
-                <?php wp_get_archives(array('type' => 'monthly', 'format' => 'option', 'show_post_count' => $count)); ?>
+                <option value=""><?php _e('Ay Seçin', 'mi-theme'); ?></option>
+                <?php 
+                $archives_html = wp_get_archives(array('type' => 'monthly', 'format' => 'option', 'echo' => 0, 'show_post_count' => $count));
+                foreach ($turkish_months as $en => $tr) {
+                    $archives_html = str_replace($en, $tr, $archives_html);
+                }
+                echo $archives_html;
+                ?>
             </select>
             <?php
         } else {
             echo '<ul class="archive-list">';
-            wp_get_archives(array('type' => 'monthly', 'show_post_count' => $count));
+            $archives_html = wp_get_archives(array('type' => 'monthly', 'echo' => 0, 'show_post_count' => $count));
+            foreach ($turkish_months as $en => $tr) {
+                $archives_html = str_replace($en, $tr, $archives_html);
+            }
+            echo $archives_html;
             echo '</ul>';
         }
         

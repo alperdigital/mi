@@ -678,6 +678,19 @@ footer p {
     text-decoration: underline;
 }
 
+.article-read-more-inline {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.article-read-more-inline:hover {
+    color: var(--primary-red-dark);
+    text-decoration: underline;
+}
+
 .article-read-more,
 .karar-read-more {
     display: inline-block;

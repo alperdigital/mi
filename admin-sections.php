@@ -206,7 +206,7 @@ function mi_section_settings_callback($post) {
                 <td>
                     <label>
                         <input type="checkbox" name="manset_enable_comments" value="1" 
-                               <?php checked(get_post_meta($post->ID, '_mi_manset_enable_comments', true), '0', false); ?> />
+                               <?php checked(get_post_meta($post->ID, '_mi_manset_enable_comments', true), '1'); ?> />
                         <strong>Yazılara yorum yapılmasına izin ver</strong> (Varsayılan: Kapalı)
                     </label>
                     <p class="description">İşaretlenirse yazılara yorum yapılabilecek, işaretlenmezse yorumlar kapalı olacak</p>
@@ -456,12 +456,10 @@ function mi_save_section_meta_box($post_id) {
         update_post_meta($post_id, '_mi_manset_default_sort', sanitize_text_field($_POST['manset_default_sort']));
     }
     
-    // Haber detayları görünürlük ayarları
+    // Görüntüleme seçenekleri
+    update_post_meta($post_id, '_mi_manset_show_category', isset($_POST['manset_show_category']) ? '1' : '0');
     update_post_meta($post_id, '_mi_manset_show_views', isset($_POST['manset_show_views']) ? '1' : '0');
     update_post_meta($post_id, '_mi_manset_show_reading_time', isset($_POST['manset_show_reading_time']) ? '1' : '0');
-    update_post_meta($post_id, '_mi_manset_show_category', isset($_POST['manset_show_category']) ? '1' : '0');
-    
-    // Yorumlar ayarı
     update_post_meta($post_id, '_mi_manset_enable_comments', isset($_POST['manset_enable_comments']) ? '1' : '0');
     
     // Kararlar özel ayarları

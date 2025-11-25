@@ -79,7 +79,11 @@ get_header();
             
             <?php
             // Comments - Opsiyonel, default kapalı
-            $enable_comments = get_option('mi_enable_comments', '0') === '1';
+            // Önce genel ayarı kontrol et, sonra post'un kendi ayarını kontrol et
+            $global_comments = get_option('mi_enable_comments', '0') === '1';
+            $post_comments = get_post_meta(get_the_ID(), '_mi_post_enable_comments', true) === '1';
+            $enable_comments = $global_comments || $post_comments;
+            
             if ($enable_comments && (comments_open() || get_comments_number())) {
                 comments_template();
             }

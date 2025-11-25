@@ -44,6 +44,9 @@ function mi_theme_options_page() {
     $custom_footer = get_option('mi_custom_footer_code', '');
     $lazy_load = get_option('mi_enable_lazy_load', 0);
     $reading_time = get_option('mi_enable_reading_time', 1);
+    $enable_comments = get_option('mi_enable_comments', 0);
+    $show_categories = get_option('mi_show_categories_widget', 0);
+    $show_archives = get_option('mi_show_archives_widget', 1);
     $related_posts = get_option('mi_enable_related_posts', 1);
     $related_count = get_option('mi_related_posts_count', 3);
     ?>
@@ -195,6 +198,27 @@ function mi_theme_options_page() {
                         <td>
                             <input type="number" name="mi_related_posts_count" id="mi_related_posts_count" value="<?php echo esc_attr($related_count); ?>" min="1" max="10" class="small-text" />
                             <p class="description"><?php _e('Yazıların sonunda gösterilecek ilgili yazı sayısı. Önerilen: 3-6 arası', 'mi-theme'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('Widget Görünürlüğü', 'mi-theme'); ?></th>
+                        <td>
+                            <fieldset>
+                                <label>
+                                    <input type="checkbox" name="mi_show_categories_widget" value="1" <?php checked($show_categories, 1); ?> />
+                                    <strong><?php _e('Kategoriler Widget\'ını Göster', 'mi-theme'); ?></strong>
+                                    <p class="description" style="margin-left: 25px; margin-top: 5px;">
+                                        <?php _e('Sidebar\'da Kategoriler widget\'ının görünmesini sağlar. (Varsayılan: Kapalı)', 'mi-theme'); ?>
+                                    </p>
+                                </label><br><br>
+                                <label>
+                                    <input type="checkbox" name="mi_show_archives_widget" value="1" <?php checked($show_archives, 1); ?> />
+                                    <strong><?php _e('Arşiv Widget\'ını Göster', 'mi-theme'); ?></strong>
+                                    <p class="description" style="margin-left: 25px; margin-top: 5px;">
+                                        <?php _e('Sidebar\'da Arşiv widget\'ının görünmesini sağlar. Ay isimleri Türkçe olarak gösterilir. (Varsayılan: Açık)', 'mi-theme'); ?>
+                                    </p>
+                                </label>
+                            </fieldset>
                         </td>
                     </tr>
                 </table>
