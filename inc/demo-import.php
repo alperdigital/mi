@@ -169,7 +169,11 @@ function mi_import_demo_content() {
         ));
         
         if ($section_id) {
-            update_post_meta($section_id, '_mi_section_name', $section_data['name']);
+            // İLETIŞIM -> İLETİŞİM düzeltmesi (kaydetmeden önce)
+            $section_name = $section_data['name'];
+            $section_name = str_replace('İLETIŞIM', 'İLETİŞİM', $section_name);
+            $section_name = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $section_name);
+            update_post_meta($section_id, '_mi_section_name', $section_name);
             update_post_meta($section_id, '_mi_section_type', $section_data['type']);
             update_post_meta($section_id, '_mi_section_active', $section_data['active']);
             update_post_meta($section_id, '_mi_ui_template', 'top');

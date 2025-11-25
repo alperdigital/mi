@@ -424,7 +424,11 @@ function mi_save_section_meta_box($post_id) {
     }
 
     if (isset($_POST['mi_section_name'])) {
-        update_post_meta($post_id, '_mi_section_name', sanitize_text_field($_POST['mi_section_name']));
+        $section_name = sanitize_text_field($_POST['mi_section_name']);
+        // İLETIŞIM -> İLETİŞİM düzeltmesi (kaydetmeden önce)
+        $section_name = str_replace('İLETIŞIM', 'İLETİŞİM', $section_name);
+        $section_name = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $section_name);
+        update_post_meta($post_id, '_mi_section_name', $section_name);
     }
 
     if (isset($_POST['mi_section_type'])) {

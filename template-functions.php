@@ -42,20 +42,60 @@ function mi_get_section_type($post_id) {
 
 // Get section name
 function mi_get_section_name($post_id) {
+    // Önce meta field'dan al
     $name = get_post_meta($post_id, '_mi_section_name', true);
-    $name = $name ?: get_the_title($post_id);
-    // İLETIŞIM -> İLETİŞİM düzeltmesi (tüm varyasyonlar)
-    // Büyük I yerine İ kullanılmalı
-    $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
-    $name = str_replace('İletişim', 'İletişim', $name);
-    // Eğer hala yanlış karakter varsa düzelt (I yerine İ)
-    $name = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $name);
-    // Tüm büyük harf versiyonları için
-    $name = preg_replace('/İLET[Iİ]Ş[Iİ]M/i', 'İLETİŞİM', $name);
-    // Küçük harf versiyonları için
-    $name = str_replace('iletışim', 'İletişim', $name);
-    $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
-    return $name;
+    
+    // Meta field yoksa post title'dan al (get_the_title yerine get_post kullan)
+    if (empty($name)) {
+        $post = get_post($post_id);
+        if ($post && isset($post->post_title)) {
+            $name = $post->post_title;
+        } else {
+            // Fallback: get_the_title kullan (global post setup edilmişse)
+            $name = get_the_title($post_id);
+        }
+    }
+    
+    // Boş değilse düzeltmeleri yap
+    if (!empty($name)) {
+        // İLETIŞIM -> İLETİŞİM düzeltmesi (tüm varyasyonlar)
+        // Sorun: Türkçe karakterlerde büyük I (İngilizce) yerine İ (Türkçe) kullanılmalı
+        
+        // Önce tüm büyük harf versiyonlarını düzelt
+        // İLETIŞIM (I = İngilizce büyük I) -> İLETİŞİM (İ = Türkçe büyük İ)
+        $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
+        $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name); // Tekrar kontrol
+        
+        // Küçük harf versiyonları
+        $name = str_replace('İletişim', 'İletişim', $name);
+        $name = str_replace('iletışim', 'İletişim', $name);
+        
+        // Regex ile daha kapsamlı düzeltme (I yerine İ karakteri)
+        // İLET[Iİ]ŞIM pattern'i: İLET + (I veya İ) + ŞIM
+        $name = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $name);
+        
+        // Tüm büyük harf versiyonları için (her karakter için kontrol)
+        $name = preg_replace('/İLET[Iİ]Ş[Iİ]M/i', 'İLETİŞİM', $name);
+        
+        // Özel durum: Sadece "İLETIŞIM" string'i varsa (I karakteri İngilizce)
+        // Bu durumda tüm I karakterlerini İ ile değiştir (sadece bu kelime için)
+        if (preg_match('/İLETIŞIM/i', $name)) {
+            $name = preg_replace('/İLETIŞIM/i', 'İLETİŞİM', $name);
+        }
+        
+        // Son kontrol: Eğer hala yanlış karakter varsa
+        // Unicode karakter kodları ile kontrol
+        // İ (U+0130) ve I (U+0049) farklı karakterler
+        // İLETIŞIM'deki I (U+0049) -> İ (U+0130) olmalı
+        $name = mb_convert_encoding($name, 'UTF-8', 'UTF-8');
+        
+        // Son bir düzeltme daha: Karakter karakter kontrol
+        if (mb_strpos($name, 'İLETIŞIM') !== false) {
+            $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
+        }
+    }
+    
+    return $name ?: 'Bölüm';
 }
 
 // Get UI template position
