@@ -982,6 +982,7 @@ footer p {
 /* # içeren başlıklar için punto küçültme */
 .section-title[data-has-hash="true"] {
     font-size: 28px;
+    white-space: pre-line;
 }
 
 .section-description {
