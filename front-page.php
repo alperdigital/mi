@@ -27,7 +27,7 @@ get_header();
     if (!empty($sections)) :
         foreach ($sections as $section) :
             $section_type = get_post_meta($section->ID, '_mi_section_type', true);
-            $section_name = get_post_meta($section->ID, '_mi_section_name', true) ?: $section->post_title;
+            $section_name = mi_get_section_name($section->ID);
             ?>
             <section class="front-page-section section-<?php echo esc_attr($section_type); ?>" id="section-<?php echo esc_attr($section->ID); ?>">
                 <?php
