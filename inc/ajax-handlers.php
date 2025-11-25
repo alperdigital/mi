@@ -55,10 +55,10 @@ if (!function_exists('mi_filter_manset_articles')) {
                 break;
             case 'editor-choice':
                 // Editörün seçimi: menu_order veya featured post'lar
-                $args['orderby'] = array(
-                    'menu_order' => 'ASC',
-                    'date' => 'DESC'
-                );
+                // Önce featured post'ları, sonra menu_order'a göre sırala
+                $args['orderby'] = 'menu_order';
+                $args['order'] = 'ASC';
+                // Featured post'ları önceliklendirmek için meta query ekle
                 $args['meta_query'] = array(
                     'relation' => 'OR',
                     array(
