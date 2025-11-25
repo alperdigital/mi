@@ -973,6 +973,11 @@ footer p {
     text-transform: none; /* Türkçe karakterler için uppercase kullanmıyoruz */
 }
 
+/* # içeren başlıklar için punto küçültme */
+.section-title[data-has-hash="true"] {
+    font-size: 28px;
+}
+
 .section-description {
     font-size: 18px;
     color: var(--text-gray);
