@@ -26,13 +26,22 @@
             <nav class="main-navigation">
                 <?php
                 $sections = mi_get_active_sections();
+                $single_page_mode = get_option('mi_enable_single_page', 0) === 1;
+                
                 if (!empty($sections)) {
                     echo '<ul class="nav-menu">';
                     foreach ($sections as $section) {
                         $section_name = mi_get_section_name($section->ID);
-                        $section_url = get_permalink($section->ID);
+                        
+                        // Tek sayfa modunda hash link, değilse normal permalink
+                        if ($single_page_mode && is_front_page()) {
+                            $section_url = '#' . 'section-' . $section->ID;
+                        } else {
+                            $section_url = get_permalink($section->ID);
+                        }
+                        
                         $current_class = (is_singular('mi_section') && get_the_ID() == $section->ID) ? 'current-menu-item' : '';
-                        echo '<li class="' . esc_attr($current_class) . '"><a href="' . esc_url($section_url) . '">' . esc_html($section_name) . '</a></li>';
+                        echo '<li class="' . esc_attr($current_class) . '"><a href="' . esc_url($section_url) . '" data-section-id="' . esc_attr($section->ID) . '">' . esc_html($section_name) . '</a></li>';
                     }
                     echo '</ul>';
                 } else {

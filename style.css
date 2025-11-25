@@ -114,6 +114,12 @@ header p {
     color: var(--primary-red);
 }
 
+.nav-menu li a.active {
+    color: var(--primary-red);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-red);
+}
+
 .nav-menu li.current-menu-item > a,
 .nav-menu li.current_page_item > a {
     color: var(--primary-red);

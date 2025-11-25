@@ -33,6 +33,7 @@ function mi_theme_options_page() {
         update_option('mi_show_archives_widget', isset($_POST['mi_show_archives_widget']) ? 1 : 0);
         update_option('mi_enable_related_posts', isset($_POST['mi_enable_related_posts']) ? 1 : 0);
         update_option('mi_related_posts_count', absint($_POST['mi_related_posts_count']));
+        update_option('mi_enable_single_page', isset($_POST['mi_enable_single_page']) ? 1 : 0);
         
         echo '<div class="notice notice-success"><p>' . __('Ayarlar kaydedildi!', 'mi-theme') . '</p></div>';
     }
@@ -49,6 +50,7 @@ function mi_theme_options_page() {
     $show_archives = get_option('mi_show_archives_widget', 1);
     $related_posts = get_option('mi_enable_related_posts', 1);
     $related_count = get_option('mi_related_posts_count', 3);
+    $single_page = get_option('mi_enable_single_page', 0);
     ?>
     <div class="wrap mi-theme-options">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>

@@ -104,6 +104,17 @@ function mi_enqueue_scripts() {
         wp_enqueue_script('masonry');
         wp_enqueue_script('imagesloaded');
     }
+    
+    // Enqueue single page mode script
+    if (get_option('mi_enable_single_page', 0) === 1) {
+        wp_enqueue_script(
+            'mi-single-page',
+            get_template_directory_uri() . '/assets/js/single-page.js',
+            array('jquery'),
+            '1.0.0',
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'mi_enqueue_scripts');
 
@@ -128,6 +139,16 @@ function mi_body_classes($classes) {
     return $classes;
 }
 add_filter('body_class', 'mi_body_classes');
+
+// Add data attribute for single page mode
+function mi_body_data_attributes($attr) {
+    $single_page_mode = get_option('mi_enable_single_page', 0) === 1;
+    if ($single_page_mode) {
+        $attr .= ' data-single-page-mode="1"';
+    }
+    return $attr;
+}
+add_filter('body_attributes', 'mi_body_data_attributes');
 
 // Include admin sections
 require_once get_template_directory() . '/admin-sections.php';
