@@ -664,8 +664,8 @@ footer p {
     margin-bottom: 20px;
     flex-grow: 1;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -2418,7 +2418,7 @@ body.menu-open {
         overflow-y: visible;
         margin-top: 10px;
         border-top: 1px solid var(--border-color);
-        padding-top: 15px;
+        padding-top: 10px;
     }
     
     .main-navigation.mobile-menu-open {
@@ -2426,14 +2426,16 @@ body.menu-open {
     }
     
     .nav-menu {
-        flex-direction: column;
-        gap: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
         width: 100%;
+        justify-content: center;
     }
     
     .nav-menu li {
-        width: 100%;
-        border-bottom: 1px solid var(--border-color);
+        width: auto;
+        border-bottom: none;
         text-align: center;
     }
     
@@ -2443,9 +2445,16 @@ body.menu-open {
     
     .nav-menu li a {
         display: block;
-        padding: 15px 0;
+        padding: 8px 12px;
         text-align: center;
-        font-size: 16px;
+        font-size: 14px;
+        white-space: nowrap;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .nav-menu li a:hover {
+        background-color: var(--bg-light);
     }
 }
 
@@ -4073,19 +4082,32 @@ code[class*="language-"] {
     
     .article-excerpt {
         font-size: 13px;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
+        -webkit-line-clamp: 5;
+        line-clamp: 5;
+        line-height: 1.5;
     }
     
     .article-footer {
         font-size: 12px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .article-author {
+        flex: 1;
+    }
+    
+    .article-footer-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
     }
     
     .article-date {
-        text-align: left;
+        text-align: right;
     }
     
     .article-read-more {

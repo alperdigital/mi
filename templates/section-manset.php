@@ -151,7 +151,7 @@ $enable_comments = get_post_meta($post_id, '_mi_manset_enable_comments', true) =
                             } else {
                                 $content = get_the_content();
                                 $content = strip_tags($content);
-                                $excerpt_text = wp_trim_words($content, 20, '');
+                                $excerpt_text = wp_trim_words($content, 40, '');
                             }
                             echo esc_html($excerpt_text);
                             ?>

@@ -44,9 +44,11 @@ function mi_get_section_type($post_id) {
 function mi_get_section_name($post_id) {
     $name = get_post_meta($post_id, '_mi_section_name', true);
     $name = $name ?: get_the_title($post_id);
-    // İLETIŞIM -> İLETİŞİM düzeltmesi
+    // İLETIŞIM -> İLETİŞİM düzeltmesi (tüm varyasyonlar)
     $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
-    $name = str_replace('İletişim', 'İletişim', $name); // Küçük harf versiyonu da
+    $name = str_replace('İletişim', 'İletişim', $name);
+    $name = str_replace('İLETİŞIM', 'İLETİŞİM', $name); // Zaten doğruysa değiştirme
+    $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name); // Tekrar kontrol
     return $name;
 }
 

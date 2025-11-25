@@ -112,7 +112,7 @@ if (!function_exists('mi_filter_manset_articles')) {
                         } else {
                             $content = get_the_content();
                             $content = strip_tags($content);
-                            $excerpt_text = wp_trim_words($content, 20, '');
+                            $excerpt_text = wp_trim_words($content, 40, '');
                         }
                         echo esc_html($excerpt_text);
                         ?>
