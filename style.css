@@ -982,16 +982,32 @@ footer p {
     }
     
     .section-title {
-        font-size: 28px;
+        font-size: 20px;
+        line-height: 1.4;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
     }
     
     .aciklama-content-wrapper {
-        font-size: 16px;
-        padding: 30px 15px;
+        font-size: 14px;
+        padding: 20px 15px;
+        line-height: 1.6;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .aciklama-content-wrapper p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .aciklama-content-wrapper p:first-child {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 1.6;
     }
 }
 

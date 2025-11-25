@@ -45,10 +45,11 @@ function mi_get_section_name($post_id) {
     $name = get_post_meta($post_id, '_mi_section_name', true);
     $name = $name ?: get_the_title($post_id);
     // İLETIŞIM -> İLETİŞİM düzeltmesi (tüm varyasyonlar)
+    // Büyük I yerine İ kullanılmalı
     $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
     $name = str_replace('İletişim', 'İletişim', $name);
-    $name = str_replace('İLETİŞIM', 'İLETİŞİM', $name); // Zaten doğruysa değiştirme
-    $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name); // Tekrar kontrol
+    // Eğer hala yanlış karakter varsa düzelt
+    $name = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $name);
     return $name;
 }
 
