@@ -12,13 +12,6 @@ function mi_theme_setup() {
     add_theme_support('automatic-feed-links');
     add_theme_support('custom-logo');
     
-    // Default olarak yorumları kapat
-    if (get_option('mi_enable_comments', '0') !== '1') {
-        // Yorumları varsayılan olarak kapalı yap
-        add_filter('comments_open', '__return_false', 20);
-        add_filter('pings_open', '__return_false', 20);
-    }
-    
     // Gutenberg support
     add_theme_support('editor-styles');
     add_theme_support('align-wide');
@@ -240,6 +233,9 @@ require_once get_template_directory() . '/inc/demo-import.php';
 
 // Include AJAX Handlers
 require_once get_template_directory() . '/inc/ajax-handlers.php';
+
+// Include Turkish Archives Support
+require_once get_template_directory() . '/inc/turkish-archives.php';
 
 // Include Admin UI
 require_once get_template_directory() . '/inc/admin-ui.php';
