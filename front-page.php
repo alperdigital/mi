@@ -40,7 +40,15 @@ get_header();
                     ?>
                     <div class="container">
                         <div class="section-header">
-                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php echo esc_html($section_name); ?></h2>
+                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php 
+                                // # içeren başlıklarda her hashtag'i ayrı satıra al
+                                if (strpos($section_name, '#') !== false) {
+                                    $formatted_name = preg_replace('/\s+#/', "\n#", $section_name);
+                                    echo esc_html($formatted_name);
+                                } else {
+                                    echo esc_html($section_name);
+                                }
+                            ?></h2>
                         </div>
                     </div>
                     <?php
@@ -50,7 +58,15 @@ get_header();
                     ?>
                     <div class="container">
                         <div class="section-header">
-                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php echo esc_html($section_name); ?></h2>
+                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php 
+                                // # içeren başlıklarda her hashtag'i ayrı satıra al
+                                if (strpos($section_name, '#') !== false) {
+                                    $formatted_name = preg_replace('/\s+#/', "\n#", $section_name);
+                                    echo esc_html($formatted_name);
+                                } else {
+                                    echo esc_html($section_name);
+                                }
+                            ?></h2>
                         </div>
                         <div class="section-content">
                             <?php 

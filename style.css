@@ -293,7 +293,8 @@ footer p {
     
     /* # içeren başlıklar için özel ayar */
     .section-title[data-has-hash="true"] {
-        font-size: 14px !important;
+        font-size: 16px !important;
+        white-space: pre-line;
     }
     
     /* Mobil görünümde manset articles */
@@ -1008,8 +1009,9 @@ footer p {
     
     /* Uzun başlıklar için özel ayar (# içeren) */
     .section-title[data-has-hash="true"] {
-        font-size: 14px !important;
-        line-height: 1.3;
+        font-size: 16px !important;
+        line-height: 1.4;
+        white-space: pre-line;
     }
     
     .aciklama-content-wrapper {
@@ -1507,7 +1509,8 @@ footer p {
     
     /* # içeren başlıklar için özel ayar */
     .section-title[data-has-hash="true"] {
-        font-size: 14px !important;
+        font-size: 16px !important;
+        white-space: pre-line;
     }
     
     .rule-item {
