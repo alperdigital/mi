@@ -1505,6 +1505,11 @@ footer p {
         font-size: 24px;
     }
     
+    /* # içeren başlıklar için özel ayar */
+    .section-title[data-has-hash="true"] {
+        font-size: 8px !important;
+    }
+    
     .rule-item {
         flex-direction: column;
         text-align: center;
