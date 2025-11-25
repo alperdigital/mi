@@ -965,11 +965,12 @@ footer p {
     font-weight: 700;
     color: var(--primary-red);
     margin-bottom: 15px;
-    text-transform: uppercase;
+    /* text-transform: uppercase kaldırıldı - Türkçe karakterlerde I/İ sorunu yaratıyor */
     letter-spacing: 1px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
+    text-transform: none; /* Türkçe karakterler için uppercase kullanmıyoruz */
 }
 
 .section-description {
