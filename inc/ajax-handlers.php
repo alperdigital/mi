@@ -88,21 +88,6 @@ if (!function_exists('mi_filter_manset_articles')) {
                 $views = function_exists('mi_get_post_views') ? mi_get_post_views(get_the_ID()) : 0;
                 ?>
                 <article class="manset-article">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <div class="article-thumbnail">
-                            <a href="<?php the_permalink(); ?>">
-                                <?php the_post_thumbnail('medium_large', array('alt' => get_the_title())); ?>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                    
-                    <div class="article-header">
-                        <span class="article-category"><?php echo esc_html($category_name); ?></span>
-                        <?php if ($views > 0) : ?>
-                            <span class="article-views">👁️ <?php echo number_format($views); ?></span>
-                        <?php endif; ?>
-                    </div>
-                    
                     <h2 class="article-title">
                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     </h2>
@@ -114,20 +99,14 @@ if (!function_exists('mi_filter_manset_articles')) {
                         } else {
                             $content = get_the_content();
                             $content = strip_tags($content);
-                            echo esc_html(wp_trim_words($content, 25, '...'));
+                            echo esc_html(wp_trim_words($content, 20, '...'));
                         }
                         ?>
                     </div>
                     
-                    <div class="article-meta">
-                        <span class="article-author">✍️ <?php the_author(); ?></span>
-                        <span class="article-date">📅 <?php echo get_the_date('d F Y H:i'); ?></span>
-                    </div>
-                    
-                    <div class="article-share">
-                        <?php if (function_exists('mi_render_social_share')) : ?>
-                            <?php mi_render_social_share(get_the_ID(), true); ?>
-                        <?php endif; ?>
+                    <div class="article-footer">
+                        <div class="article-author">✍️ <?php the_author(); ?></div>
+                        <div class="article-date">📅 <?php echo get_the_date('d F Y'); ?></div>
                     </div>
                     
                     <a href="<?php the_permalink(); ?>" class="article-read-more">Devamını Oku →</a>

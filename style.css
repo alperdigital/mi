@@ -533,8 +533,8 @@ footer p {
 }
 
 .manset-articles {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
 
@@ -544,6 +544,9 @@ footer p {
     border-radius: 8px;
     padding: 25px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
 }
 
 .manset-article:hover {
@@ -575,9 +578,11 @@ footer p {
 }
 
 .article-title {
-    margin: 0 0 12px 0;
-    font-size: 22px;
+    margin: 0 0 15px 0;
+    font-size: 18px;
     font-weight: 700;
+    line-height: 1.4;
+    flex-grow: 0;
 }
 
 .article-title a {
@@ -592,9 +597,33 @@ footer p {
 
 .article-excerpt {
     color: var(--text-gray);
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.article-author {
+    flex: 1;
+}
+
+.article-date {
+    text-align: right;
 }
 
 .article-meta {
@@ -638,16 +667,22 @@ footer p {
 .article-read-more,
 .karar-read-more {
     display: inline-block;
-    margin-top: 15px;
-    color: var(--primary-red);
+    margin-top: auto;
+    padding: 10px 20px;
+    background-color: var(--primary-red);
+    color: var(--bg-white);
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.3s ease;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 14px;
 }
 
 .article-read-more:hover,
 .karar-read-more:hover {
-    color: var(--primary-red-dark);
+    background-color: var(--primary-red-dark);
+    transform: translateY(-1px);
 }
 
 /* Loading Spinner */
@@ -2841,6 +2876,26 @@ body.menu-open {
     color: var(--primary-red);
     font-weight: 600;
     font-size: 16px;
+}
+
+/* Mobile - Single Column */
+@media (max-width: 600px) {
+    .manset-articles {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .manset-article {
+        min-height: auto;
+    }
+    
+    .article-title {
+        font-size: 18px;
+    }
+    
+    .article-excerpt {
+        -webkit-line-clamp: 4;
+    }
 }
 
 /* Responsive Adjustments for New Features */
