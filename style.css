@@ -55,6 +55,7 @@ header .container {
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+    position: relative;
 }
 
 header h1 {
@@ -966,6 +967,9 @@ footer p {
     margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .section-description {
@@ -2388,6 +2392,9 @@ footer p {
     cursor: pointer;
     padding: 10px;
     z-index: 1001;
+    position: absolute;
+    top: 15px;
+    right: 20px;
 }
 
 .hamburger-line {
@@ -2416,43 +2423,41 @@ body.menu-open {
 
 @media (max-width: 768px) {
     .mobile-menu-toggle {
-        display: none; /* Hamburger butonu gizli */
+        display: flex; /* Hamburger butonu görünür */
     }
     
     .main-navigation {
-        position: relative;
-        top: auto;
-        right: auto;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        background-color: transparent;
-        box-shadow: none;
-        transition: none;
-        z-index: auto;
-        padding: 0;
-        overflow-y: visible;
-        margin-top: 10px;
-        border-top: 1px solid var(--border-color);
-        padding-top: 10px;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background-color: var(--bg-white);
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 1000;
+        padding: 60px 20px 20px;
+        overflow-y: auto;
+        margin-top: 0;
+        border-top: none;
+        border-left: 1px solid var(--border-color);
     }
     
     .main-navigation.mobile-menu-open {
-        right: auto;
+        right: 0;
     }
     
     .nav-menu {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
+        flex-direction: column;
+        gap: 0;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
     }
     
     .nav-menu li {
-        width: auto;
-        border-bottom: none;
-        text-align: center;
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
     }
     
     .nav-menu li:last-child {
@@ -2461,16 +2466,32 @@ body.menu-open {
     
     .nav-menu li a {
         display: block;
-        padding: 8px 12px;
-        text-align: center;
-        font-size: 14px;
-        white-space: nowrap;
-        border-radius: 4px;
+        padding: 15px 0;
+        text-align: left;
+        font-size: 16px;
+        white-space: normal;
+        border-radius: 0;
         transition: background-color 0.3s ease;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
     }
     
     .nav-menu li a:hover {
         background-color: var(--bg-light);
+        padding-left: 10px;
+    }
+    
+    /* Overlay when menu is open */
+    body.menu-open::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
     }
 }
 

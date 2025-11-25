@@ -48,8 +48,13 @@ function mi_get_section_name($post_id) {
     // Büyük I yerine İ kullanılmalı
     $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
     $name = str_replace('İletişim', 'İletişim', $name);
-    // Eğer hala yanlış karakter varsa düzelt
+    // Eğer hala yanlış karakter varsa düzelt (I yerine İ)
     $name = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $name);
+    // Tüm büyük harf versiyonları için
+    $name = preg_replace('/İLET[Iİ]Ş[Iİ]M/i', 'İLETİŞİM', $name);
+    // Küçük harf versiyonları için
+    $name = str_replace('iletışim', 'İletişim', $name);
+    $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
     return $name;
 }
 
