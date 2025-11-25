@@ -43,7 +43,11 @@ function mi_get_section_type($post_id) {
 // Get section name
 function mi_get_section_name($post_id) {
     $name = get_post_meta($post_id, '_mi_section_name', true);
-    return $name ?: get_the_title($post_id);
+    $name = $name ?: get_the_title($post_id);
+    // İLETIŞIM -> İLETİŞİM düzeltmesi
+    $name = str_replace('İLETIŞIM', 'İLETİŞİM', $name);
+    $name = str_replace('İletişim', 'İletişim', $name); // Küçük harf versiyonu da
+    return $name;
 }
 
 // Get UI template position

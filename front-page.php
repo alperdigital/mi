@@ -36,16 +36,14 @@ get_header();
                 
                 // Section tipine göre template yükle
                 if (function_exists('mi_render_section_template')) {
-                    // Aciklama tipinde başlık gösterme, diğerlerinde göster
-                    if ($section_type !== 'aciklama') {
-                        ?>
-                        <div class="container">
-                            <div class="section-header">
-                                <h2 class="section-title"><?php echo esc_html($section_name); ?></h2>
-                            </div>
+                    // Tüm section tiplerinde başlık göster
+                    ?>
+                    <div class="container">
+                        <div class="section-header">
+                            <h2 class="section-title"><?php echo esc_html($section_name); ?></h2>
                         </div>
-                        <?php
-                    }
+                    </div>
+                    <?php
                     mi_render_section_template($section);
                 } else {
                     // Fallback: Basit içerik gösterimi
