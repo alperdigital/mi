@@ -3046,7 +3046,8 @@ body.menu-open {
     }
     
     .article-excerpt {
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 5;
+        line-clamp: 5;
     }
 }
 
