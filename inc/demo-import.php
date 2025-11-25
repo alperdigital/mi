@@ -153,6 +153,9 @@ function mi_import_demo_content() {
             'response_time' => '24-48 Saat',
             'intro_title' => 'Yazılarınızı Paylaşın',
             'intro_text' => 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.',
+            'show_info' => '1',
+            'show_rules' => '0', // Default: kapalı
+            'show_quick' => '1',
         ),
     );
     
@@ -186,6 +189,10 @@ function mi_import_demo_content() {
                 if (isset($section_data['intro_text'])) {
                     update_post_meta($section_id, '_mi_iletisim_intro_text', $section_data['intro_text']);
                 }
+                // Alt bölüm görünürlük ayarları
+                update_post_meta($section_id, '_mi_iletisim_show_info', isset($section_data['show_info']) ? $section_data['show_info'] : '1');
+                update_post_meta($section_id, '_mi_iletisim_show_rules', isset($section_data['show_rules']) ? $section_data['show_rules'] : '0');
+                update_post_meta($section_id, '_mi_iletisim_show_quick', isset($section_data['show_quick']) ? $section_data['show_quick'] : '1');
             }
         }
     }

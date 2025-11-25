@@ -9,94 +9,129 @@ $contact_email = get_post_meta($post_id, '_mi_iletisim_email', true) ?: get_opti
 $response_time = get_post_meta($post_id, '_mi_iletisim_response_time', true) ?: '24-48 Saat';
 $intro_title = get_post_meta($post_id, '_mi_iletisim_intro_title', true) ?: 'Yazılarınızı Paylaşın';
 $intro_text = get_post_meta($post_id, '_mi_iletisim_intro_text', true) ?: 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.';
+
+// Alt bölüm görünürlük ayarları
+$show_info = get_post_meta($post_id, '_mi_iletisim_show_info', true) !== '0'; // Default: göster
+$show_rules = get_post_meta($post_id, '_mi_iletisim_show_rules', true) === '1'; // Default: gizle
+$show_quick = get_post_meta($post_id, '_mi_iletisim_show_quick', true) !== '0'; // Default: göster
+
+// İletişim Bilgileri içerik ayarları
+$info_title = get_post_meta($post_id, '_mi_iletisim_info_title', true) ?: 'İletişim Bilgileri';
+$info_email_text = get_post_meta($post_id, '_mi_iletisim_info_email_text', true) ?: 'Yazılarınızı ve görüşlerinizi e-posta ile gönderebilirsiniz.';
+$info_response_text = get_post_meta($post_id, '_mi_iletisim_info_response_text', true) ?: 'Mesajlarınıza en kısa sürede yanıt vermeye çalışıyoruz.';
+$info_evaluation_text = get_post_meta($post_id, '_mi_iletisim_info_evaluation_text', true) ?: 'Gönderdiğiniz yazılar değerlendirilerek yayınlanabilir.';
+
+// Yazı Gönderme Kuralları içerik ayarları
+$rules_title = get_post_meta($post_id, '_mi_iletisim_rules_title', true) ?: 'Yazı Gönderme Kuralları';
+$rules_content = get_post_meta($post_id, '_mi_iletisim_rules_content', true) ?: '✅ Orijinal İçerik: Gönderdiğiniz yazıların orijinal ve özgün olması gerekmektedir. Başka kaynaklardan alıntı yapıyorsanız kaynak belirtiniz.
+
+📝 Uygun Dil: Yazılarınızda saygılı ve uygun bir dil kullanınız. Nefret söylemi, ayrımcılık veya saldırgan içerik içeren yazılar yayınlanmayacaktır.
+
+📏 Uzunluk: Yazılarınızın en az 200 kelime olması önerilir. Ancak daha kısa veya uzun yazılar da değerlendirilebilir.
+
+🔍 Değerlendirme: Gönderilen tüm yazılar editörlerimiz tarafından değerlendirilir. Yayınlanma kararı editörlerimize aittir.';
+
+// Hızlı İletişim içerik ayarları
+$quick_title = get_post_meta($post_id, '_mi_iletisim_quick_title', true) ?: 'Hızlı İletişim';
+$quick_text = get_post_meta($post_id, '_mi_iletisim_quick_text', true) ?: 'Doğrudan e-posta göndermek isterseniz:';
+$quick_button_text = get_post_meta($post_id, '_mi_iletisim_quick_button_text', true) ?: 'E-posta Gönder';
 ?>
 
 <div class="iletisim-section <?php echo $is_front_page ? 'front-page-iletisim' : ''; ?>">
-    <div class="iletisim-intro">
-        <div class="intro-icon">📧</div>
-        <h2>Bize Ulaşın</h2>
-        <h1><?php echo esc_html($intro_title); ?></h1>
-        <p><?php echo esc_html($intro_text); ?></p>
-    </div>
-    
-    <div class="iletisim-content">
-        <div class="iletisim-info">
-            <h2>📞 İletişim Bilgileri</h2>
-            
-            <div class="info-item">
-                <div class="info-icon">📧</div>
-                <div class="info-content">
-                    <h3>E-posta</h3>
-                    <a href="mailto:<?php echo esc_attr($contact_email); ?>"><?php echo esc_html($contact_email); ?></a>
-                    <p>Yazılarınızı ve görüşlerinizi e-posta ile gönderebilirsiniz.</p>
-                </div>
-            </div>
-            
-            <div class="info-item">
-                <div class="info-icon">⏰</div>
-                <div class="info-content">
-                    <h3>Yanıt Süresi</h3>
-                    <p class="info-value"><?php echo esc_html($response_time); ?></p>
-                    <p>Mesajlarınıza en kısa sürede yanıt vermeye çalışıyoruz.</p>
-                </div>
-            </div>
-            
-            <div class="info-item">
-                <div class="info-icon">📝</div>
-                <div class="info-content">
-                    <h3>Yazı Değerlendirme</h3>
-                    <p class="info-value">3-5 Gün</p>
-                    <p>Gönderdiğiniz yazılar değerlendirilerek yayınlanabilir.</p>
-                </div>
-            </div>
+    <div class="container">
+        <div class="iletisim-intro">
+            <div class="intro-icon">📧</div>
+            <h2>Bize Ulaşın</h2>
+            <h1><?php echo esc_html($intro_title); ?></h1>
+            <p><?php echo esc_html($intro_text); ?></p>
         </div>
         
-        <div class="iletisim-rules">
-            <h2>📋 Yazı Gönderme Kuralları</h2>
-            
-            <div class="rule-item">
-                <div class="rule-icon">✅</div>
-                <div class="rule-content">
-                    <h3>Orijinal İçerik</h3>
-                    <p>Gönderdiğiniz yazıların orijinal ve özgün olması gerekmektedir. Başka kaynaklardan alıntı yapıyorsanız kaynak belirtiniz.</p>
+        <div class="iletisim-content">
+            <?php if ($show_info) : ?>
+            <div class="iletisim-info">
+                <h2><?php echo esc_html($info_title); ?></h2>
+                
+                <div class="info-item">
+                    <div class="info-icon">📧</div>
+                    <div class="info-content">
+                        <h3>E-posta</h3>
+                        <a href="mailto:<?php echo esc_attr($contact_email); ?>"><?php echo esc_html($contact_email); ?></a>
+                        <p><?php echo esc_html($info_email_text); ?></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">⏰</div>
+                    <div class="info-content">
+                        <h3>Yanıt Süresi</h3>
+                        <p class="info-value"><?php echo esc_html($response_time); ?></p>
+                        <p><?php echo esc_html($info_response_text); ?></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">📝</div>
+                    <div class="info-content">
+                        <h3>Yazı Değerlendirme</h3>
+                        <p class="info-value">3-5 Gün</p>
+                        <p><?php echo esc_html($info_evaluation_text); ?></p>
+                    </div>
                 </div>
             </div>
+            <?php endif; ?>
             
-            <div class="rule-item">
-                <div class="rule-icon">📝</div>
-                <div class="rule-content">
-                    <h3>Uygun Dil</h3>
-                    <p>Yazılarınızda saygılı ve uygun bir dil kullanınız. Nefret söylemi, ayrımcılık veya saldırgan içerik içeren yazılar yayınlanmayacaktır.</p>
-                </div>
+            <?php if ($show_rules) : ?>
+            <div class="iletisim-rules">
+                <h2><?php echo esc_html($rules_title); ?></h2>
+                
+                <?php
+                // Kuralları parse et ve göster
+                $rules_lines = explode("\n", $rules_content);
+                foreach ($rules_lines as $rule_line) {
+                    $rule_line = trim($rule_line);
+                    if (empty($rule_line)) continue;
+                    
+                    // İkon ve başlık/içerik ayır
+                    if (preg_match('/^([^\s]+)\s+(.+)$/', $rule_line, $matches)) {
+                        $icon = $matches[1];
+                        $content = $matches[2];
+                        
+                        // Başlık ve açıklama ayır
+                        if (preg_match('/^(.+?):\s*(.+)$/', $content, $content_matches)) {
+                            $rule_title = trim($content_matches[1]);
+                            $rule_desc = trim($content_matches[2]);
+                        } else {
+                            $rule_title = '';
+                            $rule_desc = $content;
+                        }
+                        ?>
+                        <div class="rule-item">
+                            <div class="rule-icon"><?php echo esc_html($icon); ?></div>
+                            <div class="rule-content">
+                                <?php if ($rule_title) : ?>
+                                    <h3><?php echo esc_html($rule_title); ?></h3>
+                                <?php endif; ?>
+                                <p><?php echo esc_html($rule_desc); ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
             </div>
+            <?php endif; ?>
             
-            <div class="rule-item">
-                <div class="rule-icon">📏</div>
-                <div class="rule-content">
-                    <h3>Uzunluk</h3>
-                    <p>Yazılarınızın en az 200 kelime olması önerilir. Ancak daha kısa veya uzun yazılar da değerlendirilebilir.</p>
-                </div>
+            <?php if ($show_quick) : ?>
+            <div class="iletisim-quick">
+                <h2><?php echo esc_html($quick_title); ?></h2>
+                <p><?php echo esc_html($quick_text); ?></p>
+                <a href="mailto:<?php echo esc_attr($contact_email); ?>?subject=Yazı Gönderimi&body=Merhaba,%0D%0A%0D%0AYazımı paylaşmak istiyorum." 
+                   class="quick-email-btn">
+                    <span>📧</span>
+                    <span><?php echo esc_html($quick_button_text); ?></span>
+                </a>
             </div>
-            
-            <div class="rule-item">
-                <div class="rule-icon">🔍</div>
-                <div class="rule-content">
-                    <h3>Değerlendirme</h3>
-                    <p>Gönderilen tüm yazılar editörlerimiz tarafından değerlendirilir. Yayınlanma kararı editörlerimize aittir.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="iletisim-quick">
-            <h2>🚀 Hızlı İletişim</h2>
-            <p>Doğrudan e-posta göndermek isterseniz:</p>
-            <a href="mailto:<?php echo esc_attr($contact_email); ?>?subject=Yazı Gönderimi&body=Merhaba,%0D%0A%0D%0AYazımı paylaşmak istiyorum." 
-               class="quick-email-btn">
-                <span>📧</span>
-                <span>E-posta Gönder</span>
-            </a>
+            <?php endif; ?>
         </div>
     </div>
 </div>
-
-

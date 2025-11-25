@@ -188,7 +188,7 @@ function mi_section_settings_callback($post) {
     
     <div id="iletisim-settings" class="section-type-settings" style="display:none;">
         <div class="notice notice-info inline" style="margin: 15px 0;">
-            <p><strong>💡 İletişim Bölümü:</strong> Bu bölüm iletişim bilgilerini ve yazı gönderme kurallarını gösterir.</p>
+            <p><strong>💡 İletişim Bölümü:</strong> Bu bölüm iletişim bilgilerini ve yazı gönderme kurallarını gösterir. Alt bölümleri opsiyonel olarak ekleyebilir veya çıkarabilirsiniz.</p>
         </div>
         <table class="form-table">
             <tr>
@@ -197,7 +197,7 @@ function mi_section_settings_callback($post) {
                     <input type="email" id="iletisim_email" name="iletisim_email" 
                            value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_email', true) ?: get_option('admin_email')); ?>" 
                            class="regular-text" />
-                    <p class="description">İletişim sayfasında gösterilecek e-posta adresi</p>
+                    <p class="description">İletişim sayfasında gösterilecek e-posta adresi (Tüm bölümlerde kullanılır)</p>
                 </td>
             </tr>
             <tr>
@@ -224,6 +224,111 @@ function mi_section_settings_callback($post) {
                     <textarea id="iletisim_intro_text" name="iletisim_intro_text" 
                               class="large-text" rows="3"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_intro_text', true) ?: 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.'); ?></textarea>
                     <p class="description">İletişim bölümünün üst kısmında gösterilecek açıklama metni</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label>📋 Alt Bölümler</label></th>
+                <td>
+                    <fieldset>
+                        <label>
+                            <input type="checkbox" name="iletisim_show_info" value="1" 
+                                   <?php checked(get_post_meta($post->ID, '_mi_iletisim_show_info', true), '1'); ?> />
+                            <strong>İletişim Bilgileri</strong> bölümünü göster
+                        </label><br>
+                        <label>
+                            <input type="checkbox" name="iletisim_show_rules" value="1" 
+                                   <?php checked(get_post_meta($post->ID, '_mi_iletisim_show_rules', true), '0'); ?> />
+                            <strong>Yazı Gönderme Kuralları</strong> bölümünü göster (Opsiyonel)
+                        </label><br>
+                        <label>
+                            <input type="checkbox" name="iletisim_show_quick" value="1" 
+                                   <?php checked(get_post_meta($post->ID, '_mi_iletisim_show_quick', true), '1'); ?> />
+                            <strong>Hızlı İletişim</strong> bölümünü göster
+                        </label>
+                    </fieldset>
+                    <p class="description">Hangi alt bölümlerin gösterileceğini seçin</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_info_title">📞 İletişim Bilgileri Başlığı</label></th>
+                <td>
+                    <input type="text" id="iletisim_info_title" name="iletisim_info_title" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_info_title', true) ?: 'İletişim Bilgileri'); ?>" 
+                           class="regular-text" />
+                    <p class="description">İletişim Bilgileri bölümünün başlığı</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_info_email_text">📧 E-posta Açıklama Metni</label></th>
+                <td>
+                    <textarea id="iletisim_info_email_text" name="iletisim_info_email_text" 
+                              class="large-text" rows="2"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_info_email_text', true) ?: 'Yazılarınızı ve görüşlerinizi e-posta ile gönderebilirsiniz.'); ?></textarea>
+                    <p class="description">E-posta bilgisinin altında gösterilecek açıklama metni</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_info_response_text">⏰ Yanıt Süresi Açıklama Metni</label></th>
+                <td>
+                    <textarea id="iletisim_info_response_text" name="iletisim_info_response_text" 
+                              class="large-text" rows="2"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_info_response_text', true) ?: 'Mesajlarınıza en kısa sürede yanıt vermeye çalışıyoruz.'); ?></textarea>
+                    <p class="description">Yanıt süresi bilgisinin altında gösterilecek açıklama metni</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_info_evaluation_text">📝 Yazı Değerlendirme Açıklama Metni</label></th>
+                <td>
+                    <textarea id="iletisim_info_evaluation_text" name="iletisim_info_evaluation_text" 
+                              class="large-text" rows="2"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_info_evaluation_text', true) ?: 'Gönderdiğiniz yazılar değerlendirilerek yayınlanabilir.'); ?></textarea>
+                    <p class="description">Yazı değerlendirme bilgisinin altında gösterilecek açıklama metni</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_rules_title">📋 Yazı Gönderme Kuralları Başlığı</label></th>
+                <td>
+                    <input type="text" id="iletisim_rules_title" name="iletisim_rules_title" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_rules_title', true) ?: 'Yazı Gönderme Kuralları'); ?>" 
+                           class="regular-text" />
+                    <p class="description">Yazı Gönderme Kuralları bölümünün başlığı</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_rules_content">📋 Yazı Gönderme Kuralları İçeriği</label></th>
+                <td>
+                    <textarea id="iletisim_rules_content" name="iletisim_rules_content" 
+                              class="large-text" rows="8"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_rules_content', true) ?: '✅ Orijinal İçerik: Gönderdiğiniz yazıların orijinal ve özgün olması gerekmektedir. Başka kaynaklardan alıntı yapıyorsanız kaynak belirtiniz.
+
+📝 Uygun Dil: Yazılarınızda saygılı ve uygun bir dil kullanınız. Nefret söylemi, ayrımcılık veya saldırgan içerik içeren yazılar yayınlanmayacaktır.
+
+📏 Uzunluk: Yazılarınızın en az 200 kelime olması önerilir. Ancak daha kısa veya uzun yazılar da değerlendirilebilir.
+
+🔍 Değerlendirme: Gönderilen tüm yazılar editörlerimiz tarafından değerlendirilir. Yayınlanma kararı editörlerimize aittir.'); ?></textarea>
+                    <p class="description">Yazı Gönderme Kuralları bölümünün içeriği (Her kuralı ayrı satırda yazın)</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_quick_title">🚀 Hızlı İletişim Başlığı</label></th>
+                <td>
+                    <input type="text" id="iletisim_quick_title" name="iletisim_quick_title" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_quick_title', true) ?: 'Hızlı İletişim'); ?>" 
+                           class="regular-text" />
+                    <p class="description">Hızlı İletişim bölümünün başlığı</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_quick_text">🚀 Hızlı İletişim Açıklama Metni</label></th>
+                <td>
+                    <textarea id="iletisim_quick_text" name="iletisim_quick_text" 
+                              class="large-text" rows="2"><?php echo esc_textarea(get_post_meta($post->ID, '_mi_iletisim_quick_text', true) ?: 'Doğrudan e-posta göndermek isterseniz:'); ?></textarea>
+                    <p class="description">Hızlı İletişim bölümünün açıklama metni</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="iletisim_quick_button_text">🚀 Hızlı İletişim Buton Metni</label></th>
+                <td>
+                    <input type="text" id="iletisim_quick_button_text" name="iletisim_quick_button_text" 
+                           value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_iletisim_quick_button_text', true) ?: 'E-posta Gönder'); ?>" 
+                           class="regular-text" />
+                    <p class="description">Hızlı İletişim butonunun üzerinde gösterilecek metin</p>
                 </td>
             </tr>
         </table>
@@ -304,6 +409,44 @@ function mi_save_section_meta_box($post_id) {
     
     if (isset($_POST['iletisim_intro_text'])) {
         update_post_meta($post_id, '_mi_iletisim_intro_text', sanitize_textarea_field($_POST['iletisim_intro_text']));
+    }
+    
+    // Alt bölüm görünürlük ayarları
+    update_post_meta($post_id, '_mi_iletisim_show_info', isset($_POST['iletisim_show_info']) ? '1' : '0');
+    update_post_meta($post_id, '_mi_iletisim_show_rules', isset($_POST['iletisim_show_rules']) ? '1' : '0');
+    update_post_meta($post_id, '_mi_iletisim_show_quick', isset($_POST['iletisim_show_quick']) ? '1' : '0');
+    
+    // İletişim Bilgileri içerik ayarları
+    if (isset($_POST['iletisim_info_title'])) {
+        update_post_meta($post_id, '_mi_iletisim_info_title', sanitize_text_field($_POST['iletisim_info_title']));
+    }
+    if (isset($_POST['iletisim_info_email_text'])) {
+        update_post_meta($post_id, '_mi_iletisim_info_email_text', sanitize_textarea_field($_POST['iletisim_info_email_text']));
+    }
+    if (isset($_POST['iletisim_info_response_text'])) {
+        update_post_meta($post_id, '_mi_iletisim_info_response_text', sanitize_textarea_field($_POST['iletisim_info_response_text']));
+    }
+    if (isset($_POST['iletisim_info_evaluation_text'])) {
+        update_post_meta($post_id, '_mi_iletisim_info_evaluation_text', sanitize_textarea_field($_POST['iletisim_info_evaluation_text']));
+    }
+    
+    // Yazı Gönderme Kuralları içerik ayarları
+    if (isset($_POST['iletisim_rules_title'])) {
+        update_post_meta($post_id, '_mi_iletisim_rules_title', sanitize_text_field($_POST['iletisim_rules_title']));
+    }
+    if (isset($_POST['iletisim_rules_content'])) {
+        update_post_meta($post_id, '_mi_iletisim_rules_content', sanitize_textarea_field($_POST['iletisim_rules_content']));
+    }
+    
+    // Hızlı İletişim içerik ayarları
+    if (isset($_POST['iletisim_quick_title'])) {
+        update_post_meta($post_id, '_mi_iletisim_quick_title', sanitize_text_field($_POST['iletisim_quick_title']));
+    }
+    if (isset($_POST['iletisim_quick_text'])) {
+        update_post_meta($post_id, '_mi_iletisim_quick_text', sanitize_textarea_field($_POST['iletisim_quick_text']));
+    }
+    if (isset($_POST['iletisim_quick_button_text'])) {
+        update_post_meta($post_id, '_mi_iletisim_quick_button_text', sanitize_text_field($_POST['iletisim_quick_button_text']));
     }
 }
 add_action('save_post', 'mi_save_section_meta_box');
