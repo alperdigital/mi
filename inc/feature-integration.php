@@ -13,20 +13,8 @@ add_action('wp', 'mi_integrate_post_views');
 
 // Integrate reading time with post content
 function mi_integrate_reading_time() {
-    // Okuma süresi sadece single post sayfalarında gösterilsin, section template'lerinde değil
-    if (get_option('mi_enable_reading_time', 1) && is_single() && !is_singular('mi_section')) {
-        add_filter('the_content', function($content) {
-            // Check if function exists (defined in modules.php)
-            if (function_exists('mi_calculate_reading_time')) {
-                $reading_time = mi_calculate_reading_time($content);
-                if ($reading_time) {
-                    $time_html = '<div class="reading-time">⏱️ ' . $reading_time . ' dakika okuma süresi</div>';
-                    $content = $time_html . $content;
-                }
-            }
-            return $content;
-        }, 5);
-    }
+    // Okuma süresi kaldırıldı - kullanıcı isteği üzerine
+    // Artık okuma süresi gösterilmiyor
 }
 
 // Integrate related posts with theme options

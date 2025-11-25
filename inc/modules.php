@@ -54,16 +54,10 @@ function mi_reading_time_module() {
     }
     
     function mi_display_reading_time() {
-        // Okuma süresi sadece single post sayfalarında gösterilsin, section template'lerinde değil
-        if (is_single() && !is_singular('mi_section') && function_exists('mi_calculate_reading_time')) {
-            $content = get_the_content();
-            $reading_time = mi_calculate_reading_time($content);
-            if ($reading_time) {
-                echo '<span class="reading-time">⏱️ ' . $reading_time . ' dakika okuma süresi</span>';
-            }
-        }
+        // Okuma süresi kaldırıldı - kullanıcı isteği üzerine
+        // Artık okuma süresi gösterilmiyor
     }
-    add_action('mi_post_meta', 'mi_display_reading_time', 5);
+    // add_action('mi_post_meta', 'mi_display_reading_time', 5); // Devre dışı bırakıldı
 }
 add_action('init', 'mi_reading_time_module');
 

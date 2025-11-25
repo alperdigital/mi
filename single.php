@@ -39,10 +39,7 @@ get_header();
                                 <?php echo get_the_date('d F Y H:i'); ?>
                             </time>
                         </span>
-                        <span class="post-views-meta">
-                            <?php echo mi_display_post_views(); ?>
-                        </span>
-                        <?php do_action('mi_post_meta'); ?>
+                        <?php // Görüntülenme sayısı ve okuma süresi kaldırıldı ?>
                     </div>
                 </header>
                 
