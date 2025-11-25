@@ -40,7 +40,7 @@ get_header();
                     ?>
                     <div class="container">
                         <div class="section-header">
-                            <h2 class="section-title"><?php echo esc_html($section_name); ?></h2>
+                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php echo esc_html($section_name); ?></h2>
                         </div>
                     </div>
                     <?php
@@ -50,7 +50,7 @@ get_header();
                     ?>
                     <div class="container">
                         <div class="section-header">
-                            <h2 class="section-title"><?php echo esc_html($section_name); ?></h2>
+                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php echo esc_html($section_name); ?></h2>
                         </div>
                         <div class="section-content">
                             <?php 
