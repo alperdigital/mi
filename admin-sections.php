@@ -139,9 +139,21 @@ function mi_section_settings_callback($post) {
                 <th><label>🔍 Filtreleme Seçenekleri</label></th>
                 <td>
                     <fieldset>
-                        <label><input type="checkbox" name="manset_filter_category" value="1" checked /> Kategori Filtresi</label><br>
-                        <label><input type="checkbox" name="manset_filter_author" value="1" checked /> Yazar Filtresi</label><br>
-                        <label><input type="checkbox" name="manset_filter_sort" value="1" checked /> Sıralama Filtresi</label>
+                        <label>
+                            <input type="checkbox" name="manset_filter_category" value="1" 
+                                   <?php checked(get_post_meta($post->ID, '_mi_manset_filter_category', true), '0', false); ?> />
+                            <strong>Kategori Filtresi</strong> (Varsayılan: Kapalı)
+                        </label><br>
+                        <label>
+                            <input type="checkbox" name="manset_filter_author" value="1" 
+                                   <?php checked(get_post_meta($post->ID, '_mi_manset_filter_author', true), '1'); ?> />
+                            <strong>Yazar Filtresi</strong> (Varsayılan: Açık, "Tümü" seçili)
+                        </label><br>
+                        <label>
+                            <input type="checkbox" name="manset_filter_sort" value="1" 
+                                   <?php checked(get_post_meta($post->ID, '_mi_manset_filter_sort', true), '1'); ?> />
+                            <strong>Sıralama Filtresi</strong> (Varsayılan: Açık)
+                        </label>
                     </fieldset>
                     <p class="description">Manşet sayfasında hangi filtrelerin gösterileceğini seçin.</p>
                 </td>
@@ -153,6 +165,17 @@ function mi_section_settings_callback($post) {
                            value="<?php echo esc_attr(get_post_meta($post->ID, '_mi_manset_posts_per_page', true) ?: '12'); ?>" 
                            class="small-text" min="1" max="50" />
                     <p class="description">Bir sayfada gösterilecek haber sayısı (varsayılan: 12)</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="manset_default_sort">🔀 Varsayılan Sıralama</label></th>
+                <td>
+                    <select id="manset_default_sort" name="manset_default_sort" class="regular-text">
+                        <option value="date-desc" <?php selected(get_post_meta($post->ID, '_mi_manset_default_sort', true), 'date-desc'); ?>>Tarih (Yeniden Eskiye)</option>
+                        <option value="date-asc" <?php selected(get_post_meta($post->ID, '_mi_manset_default_sort', true), 'date-asc'); ?>>Tarih (Eskiden Yeniye)</option>
+                        <option value="editor-choice" <?php selected(get_post_meta($post->ID, '_mi_manset_default_sort', true), 'editor-choice'); ?>>Editörün Seçimi</option>
+                    </select>
+                    <p class="description">Sayfa ilk yüklendiğinde hangi sıralamanın aktif olacağını seçin</p>
                 </td>
             </tr>
         </table>
@@ -387,6 +410,16 @@ function mi_save_section_meta_box($post_id) {
     // Manşet özel ayarları
     if (isset($_POST['manset_posts_per_page'])) {
         update_post_meta($post_id, '_mi_manset_posts_per_page', intval($_POST['manset_posts_per_page']));
+    }
+    
+    // Filtreleme seçenekleri
+    update_post_meta($post_id, '_mi_manset_filter_category', isset($_POST['manset_filter_category']) ? '1' : '0');
+    update_post_meta($post_id, '_mi_manset_filter_author', isset($_POST['manset_filter_author']) ? '1' : '0');
+    update_post_meta($post_id, '_mi_manset_filter_sort', isset($_POST['manset_filter_sort']) ? '1' : '0');
+    
+    // Varsayılan sıralama
+    if (isset($_POST['manset_default_sort'])) {
+        update_post_meta($post_id, '_mi_manset_default_sort', sanitize_text_field($_POST['manset_default_sort']));
     }
     
     // Kararlar özel ayarları
