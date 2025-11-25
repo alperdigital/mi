@@ -160,8 +160,13 @@ function mi_import_demo_content() {
     );
     
     foreach ($sections as $section_data) {
+        // İLETIŞIM -> İLETİŞİM düzeltmesi (post title için)
+        $post_title = $section_data['title'];
+        $post_title = str_replace('İLETIŞIM', 'İLETİŞİM', $post_title);
+        $post_title = preg_replace('/İLET[Iİ]ŞIM/i', 'İLETİŞİM', $post_title);
+        
         $section_id = wp_insert_post(array(
-            'post_title' => $section_data['title'],
+            'post_title' => $post_title,
             'post_content' => $section_data['content'],
             'post_status' => 'publish',
             'post_type' => 'mi_section',
