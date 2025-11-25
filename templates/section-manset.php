@@ -11,6 +11,11 @@ $show_category = get_post_meta($post_id, '_mi_manset_filter_category', true) ===
 $show_author = get_post_meta($post_id, '_mi_manset_filter_author', true) !== '0'; // Default: göster
 $show_sort = get_post_meta($post_id, '_mi_manset_filter_sort', true) !== '0'; // Default: göster
 $default_sort = get_post_meta($post_id, '_mi_manset_default_sort', true) ?: 'date-desc';
+
+// Haber detayları görünürlük ayarları
+$show_views = get_post_meta($post_id, '_mi_manset_show_views', true) === '1';
+$show_reading_time = get_post_meta($post_id, '_mi_manset_show_reading_time', true) === '1';
+$show_category_badge = get_post_meta($post_id, '_mi_manset_show_category', true) === '1';
 ?>
 
 <div class="manset-section <?php echo $is_front_page ? 'front-page-manset' : ''; ?>">
@@ -121,28 +126,49 @@ $default_sort = get_post_meta($post_id, '_mi_manset_default_sort', true) ?: 'dat
                              data-date="<?php echo esc_attr(get_the_date('Y-m-d H:i:s')); ?>"
                              data-views="<?php echo esc_attr($views); ?>"
                              data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>">
+                        <?php if ($show_category_badge) : ?>
+                            <div class="article-category-badge">
+                                <span><?php echo esc_html($category_name); ?></span>
+                            </div>
+                        <?php endif; ?>
+                        
                         <h2 class="article-title">
                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                         </h2>
                         
                         <div class="article-excerpt">
                             <?php 
+                            $excerpt_text = '';
                             if (has_excerpt()) {
-                                echo wp_kses_post(get_the_excerpt());
+                                $excerpt_text = get_the_excerpt();
                             } else {
                                 $content = get_the_content();
                                 $content = strip_tags($content);
-                                echo esc_html(wp_trim_words($content, 20, '...'));
+                                $excerpt_text = wp_trim_words($content, 20, '');
                             }
+                            echo esc_html($excerpt_text);
                             ?>
+                            <a href="<?php the_permalink(); ?>" class="article-read-more-inline">Devamını Oku →</a>
                         </div>
                         
                         <div class="article-footer">
                             <div class="article-author">✍️ <?php the_author(); ?></div>
-                            <div class="article-date">📅 <?php echo get_the_date('d F Y'); ?></div>
+                            <div class="article-footer-right">
+                                <?php if ($show_views && $views > 0) : ?>
+                                    <span class="article-views">👁️ <?php echo number_format($views); ?></span>
+                                <?php endif; ?>
+                                <?php if ($show_reading_time && function_exists('mi_calculate_reading_time')) : ?>
+                                    <?php 
+                                    $content = get_the_content();
+                                    $reading_time = mi_calculate_reading_time($content);
+                                    if ($reading_time) :
+                                        ?>
+                                        <span class="article-reading-time">⏱️ <?php echo $reading_time; ?> dakika okuma süresi</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <span class="article-date">📅 <?php echo get_the_date('d F Y'); ?></span>
+                            </div>
                         </div>
-                        
-                        <a href="<?php the_permalink(); ?>" class="article-read-more">Devamını Oku →</a>
                     </article>
                 <?php
                 endwhile;

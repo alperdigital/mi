@@ -105,12 +105,17 @@ class MI_Categories_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'mi_categories',
-            __('MI Kategoriler', 'mi-theme'),
+            __('Kategoriler', 'mi-theme'),
             array('description' => __('Özel stilli kategoriler widget', 'mi-theme'))
         );
     }
     
     public function widget($args, $instance) {
+        // Widget görünürlük kontrolü
+        if (get_option('mi_show_categories_widget', 0) != 1) {
+            return; // Widget kapalıysa gösterilmez
+        }
+        
         $title = !empty($instance['title']) ? $instance['title'] : __('Kategoriler', 'mi-theme');
         $count = !empty($instance['count']) ? 1 : 0;
         $hierarchical = !empty($instance['hierarchical']) ? 1 : 0;

@@ -21,10 +21,16 @@ if (!function_exists('mi_filter_manset_articles')) {
         $sort = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'date-desc';
         $section_id = isset($_POST['section_id']) ? intval($_POST['section_id']) : 0;
         
-        $posts_per_page = 12;
-        if ($section_id > 0) {
-            $posts_per_page = get_post_meta($section_id, '_mi_manset_posts_per_page', true) ?: 12;
-        }
+    $posts_per_page = 12;
+    $show_views = false;
+    $show_reading_time = false;
+    $show_category_badge = false;
+    if ($section_id > 0) {
+        $posts_per_page = get_post_meta($section_id, '_mi_manset_posts_per_page', true) ?: 12;
+        $show_views = get_post_meta($section_id, '_mi_manset_show_views', true) === '1';
+        $show_reading_time = get_post_meta($section_id, '_mi_manset_show_reading_time', true) === '1';
+        $show_category_badge = get_post_meta($section_id, '_mi_manset_show_category', true) === '1';
+    }
         
         $args = array(
             'post_type' => 'post',
@@ -88,28 +94,49 @@ if (!function_exists('mi_filter_manset_articles')) {
                 $views = function_exists('mi_get_post_views') ? mi_get_post_views(get_the_ID()) : 0;
                 ?>
                 <article class="manset-article">
+                    <?php if ($show_category_badge) : ?>
+                        <div class="article-category-badge">
+                            <span><?php echo esc_html($category_name); ?></span>
+                        </div>
+                    <?php endif; ?>
+                    
                     <h2 class="article-title">
                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     </h2>
                     
                     <div class="article-excerpt">
                         <?php 
+                        $excerpt_text = '';
                         if (has_excerpt()) {
-                            echo wp_kses_post(get_the_excerpt());
+                            $excerpt_text = get_the_excerpt();
                         } else {
                             $content = get_the_content();
                             $content = strip_tags($content);
-                            echo esc_html(wp_trim_words($content, 20, '...'));
+                            $excerpt_text = wp_trim_words($content, 20, '');
                         }
+                        echo esc_html($excerpt_text);
                         ?>
+                        <a href="<?php the_permalink(); ?>" class="article-read-more-inline">Devamını Oku →</a>
                     </div>
                     
                     <div class="article-footer">
                         <div class="article-author">✍️ <?php the_author(); ?></div>
-                        <div class="article-date">📅 <?php echo get_the_date('d F Y'); ?></div>
+                        <div class="article-footer-right">
+                            <?php if ($show_views && $views > 0) : ?>
+                                <span class="article-views">👁️ <?php echo number_format($views); ?></span>
+                            <?php endif; ?>
+                            <?php if ($show_reading_time && function_exists('mi_calculate_reading_time')) : ?>
+                                <?php 
+                                $content = get_the_content();
+                                $reading_time = mi_calculate_reading_time($content);
+                                if ($reading_time) :
+                                    ?>
+                                    <span class="article-reading-time">⏱️ <?php echo $reading_time; ?> dakika okuma süresi</span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <span class="article-date">📅 <?php echo get_the_date('d F Y'); ?></span>
+                        </div>
                     </div>
-                    
-                    <a href="<?php the_permalink(); ?>" class="article-read-more">Devamını Oku →</a>
                 </article>
                 <?php
             }

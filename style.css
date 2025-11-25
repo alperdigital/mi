@@ -665,6 +665,19 @@ footer p {
     font-weight: 500;
 }
 
+.article-read-more-inline {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.article-read-more-inline:hover {
+    color: var(--primary-red-dark);
+    text-decoration: underline;
+}
+
 .article-read-more,
 .karar-read-more {
     display: inline-block;
@@ -684,6 +697,33 @@ footer p {
 .karar-read-more:hover {
     background-color: var(--primary-red-dark);
     transform: translateY(-1px);
+}
+
+.article-category-badge {
+    margin-bottom: 12px;
+}
+
+.article-category-badge span {
+    display: inline-block;
+    background-color: var(--primary-red);
+    color: var(--bg-white);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.article-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.article-reading-time {
+    font-size: 13px;
+    color: var(--text-light);
 }
 
 /* Loading Spinner */

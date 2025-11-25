@@ -14,7 +14,20 @@ get_header();
             <div class="main-content">
                 <header class="archive-header">
                     <?php
-                    the_archive_title('<h1 class="archive-title">', '</h1>');
+                    // Türkçe ay isimleri için özel başlık
+                    if (is_month()) {
+                        $month = get_query_var('monthnum');
+                        $year = get_query_var('year');
+                        $turkish_months = array(
+                            1 => 'Ocak', 2 => 'Şubat', 3 => 'Mart', 4 => 'Nisan',
+                            5 => 'Mayıs', 6 => 'Haziran', 7 => 'Temmuz', 8 => 'Ağustos',
+                            9 => 'Eylül', 10 => 'Ekim', 11 => 'Kasım', 12 => 'Aralık'
+                        );
+                        $month_name = isset($turkish_months[$month]) ? $turkish_months[$month] : '';
+                        echo '<h1 class="archive-title">' . esc_html($month_name . ' ' . $year) . '</h1>';
+                    } else {
+                        the_archive_title('<h1 class="archive-title">', '</h1>');
+                    }
                     the_archive_description('<div class="archive-description">', '</div>');
                     ?>
                 </header>

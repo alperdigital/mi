@@ -78,8 +78,9 @@ get_header();
             </article>
             
             <?php
-            // Comments
-            if (comments_open() || get_comments_number()) {
+            // Comments - Opsiyonel, default kapalı
+            $enable_comments = get_option('mi_enable_comments', '0') === '1';
+            if ($enable_comments && (comments_open() || get_comments_number())) {
                 comments_template();
             }
             ?>

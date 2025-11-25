@@ -28,6 +28,9 @@ function mi_theme_options_page() {
         update_option('mi_custom_footer_code', wp_kses_post($_POST['mi_custom_footer_code']));
         update_option('mi_enable_lazy_load', isset($_POST['mi_enable_lazy_load']) ? 1 : 0);
         update_option('mi_enable_reading_time', isset($_POST['mi_enable_reading_time']) ? 1 : 0);
+        update_option('mi_enable_comments', isset($_POST['mi_enable_comments']) ? 1 : 0);
+        update_option('mi_show_categories_widget', isset($_POST['mi_show_categories_widget']) ? 1 : 0);
+        update_option('mi_show_archives_widget', isset($_POST['mi_show_archives_widget']) ? 1 : 0);
         update_option('mi_enable_related_posts', isset($_POST['mi_enable_related_posts']) ? 1 : 0);
         update_option('mi_related_posts_count', absint($_POST['mi_related_posts_count']));
         
