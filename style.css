@@ -1003,7 +1003,7 @@ footer p {
     
     /* Uzun başlıklar için özel ayar (# içeren) */
     .section-title[data-has-hash="true"] {
-        font-size: 10px;
+        font-size: 8px;
         line-height: 1.3;
     }
     
