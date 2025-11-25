@@ -291,6 +291,11 @@ footer p {
         text-align: center;
     }
     
+    /* # içeren başlıklar için özel ayar */
+    .section-title[data-has-hash="true"] {
+        font-size: 8px !important;
+    }
+    
     /* Mobil görünümde manset articles */
     .manset-articles {
         grid-template-columns: 1fr !important;
