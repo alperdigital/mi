@@ -983,7 +983,8 @@ footer p {
 .section-title[data-has-hash="true"] {
     font-size: 28px;
     white-space: normal;
-    line-height: 1.4;
+    line-height: 1.6;
+    display: block;
 }
 
 .section-description {
