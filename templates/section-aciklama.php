@@ -1,14 +1,21 @@
 <?php
 /**
- * Template: Açıklama (Sadece İçerik)
+ * Template: Açıklama (Sadece İçerik) - Başyazı Bölümü
  * Yazının iki kere geçmemesi için sadece içeriği gösterir
+ * İmza atma özelliği sadece bu bölüm için geçerlidir
  */
 
 // Post ID'yi doğru şekilde al - global $post objesinden
 global $post;
 $post_id = isset($post) && isset($post->ID) ? $post->ID : get_the_ID();
-$signature_count = intval(get_post_meta($post_id, '_mi_aciklama_signatures', true));
-$user_signed = isset($_COOKIE['mi_signed_' . $post_id]) && $_COOKIE['mi_signed_' . $post_id] === '1';
+
+// Sadece Başyazı (aciklama) bölümü için imza özelliğini göster
+$section_type = get_post_meta($post_id, '_mi_section_type', true);
+$is_aciklama = ($section_type === 'aciklama');
+
+// İmza sayısı ve durumu (sadece Başyazı için)
+$signature_count = $is_aciklama ? intval(get_post_meta($post_id, '_mi_aciklama_signatures', true)) : 0;
+$user_signed = $is_aciklama && isset($_COOKIE['mi_signed_' . $post_id]) && $_COOKIE['mi_signed_' . $post_id] === '1';
 ?>
 
 <div class="aciklama-section">
@@ -25,7 +32,8 @@ $user_signed = isset($_COOKIE['mi_signed_' . $post_id]) && $_COOKIE['mi_signed_'
             echo $content;
             ?>
             
-            <!-- İmza At Butonu - Yazının Sonuna Eklendi -->
+            <?php if ($is_aciklama) : ?>
+            <!-- İmza At Butonu - Sadece Başyazı Bölümü için -->
             <div class="aciklama-signature-inline">
                 <button type="button" 
                         class="signature-btn <?php echo $user_signed ? 'signed' : ''; ?>" 
@@ -36,6 +44,7 @@ $user_signed = isset($_COOKIE['mi_signed_' . $post_id]) && $_COOKIE['mi_signed_'
                     <span class="signature-count">(<span class="count-number"><?php echo number_format_i18n($signature_count); ?></span>)</span>
                 </button>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
