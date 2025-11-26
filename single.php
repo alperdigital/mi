@@ -27,7 +27,7 @@ get_header();
                         <span class="post-date">
                             <span class="date-icon">📅</span>
                             <time datetime="<?php echo get_the_date('c'); ?>">
-                                <?php echo get_the_date('d F Y H:i'); ?>
+                                <?php echo mi_get_turkish_date('d F Y H:i'); ?>
                             </time>
                         </span>
                         <?php // Görüntülenme sayısı ve okuma süresi kaldırıldı ?>

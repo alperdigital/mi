@@ -171,7 +171,7 @@ $enable_comments = get_post_meta($post_id, '_mi_manset_enable_comments', true) =
                                         <span class="article-reading-time">⏱️ <?php echo $reading_time; ?> dakika okuma süresi</span>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <span class="article-date">📅 <?php echo get_the_date('d F Y'); ?></span>
+                                <span class="article-date">📅 <?php echo mi_get_turkish_date('d F Y'); ?></span>
                             </div>
                         </div>
                     </article>

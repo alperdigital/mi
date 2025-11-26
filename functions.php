@@ -260,3 +260,34 @@ require_once get_template_directory() . '/inc/feature-integration.php';
 // Include File Validator
 require_once get_template_directory() . '/inc/file-validator.php';
 
+// Türkçe tarih formatı
+function mi_get_turkish_date($format = 'd F Y', $post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    $date = get_the_date($format, $post_id);
+    
+    // İngilizce ay isimlerini Türkçe'ye çevir
+    $english_months = array(
+        'January' => 'Ocak',
+        'February' => 'Şubat',
+        'March' => 'Mart',
+        'April' => 'Nisan',
+        'May' => 'Mayıs',
+        'June' => 'Haziran',
+        'July' => 'Temmuz',
+        'August' => 'Ağustos',
+        'September' => 'Eylül',
+        'October' => 'Ekim',
+        'November' => 'Kasım',
+        'December' => 'Aralık'
+    );
+    
+    foreach ($english_months as $en => $tr) {
+        $date = str_replace($en, $tr, $date);
+    }
+    
+    return $date;
+}
+

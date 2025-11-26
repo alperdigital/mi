@@ -118,7 +118,7 @@ $post_id = get_the_ID();
                     </div>
                     <div class="karar-meta">
                         <span class="karar-mahkeme">🏛️ <?php echo esc_html($mahkeme); ?></span>
-                        <span class="karar-date">📅 <?php echo get_the_date('d F Y'); ?></span>
+                        <span class="karar-date">📅 <?php echo mi_get_turkish_date('d F Y'); ?></span>
                     </div>
                     <div class="karar-share">
                         <?php if (function_exists('mi_render_social_share')) : ?>

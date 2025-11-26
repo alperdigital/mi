@@ -134,7 +134,7 @@ if (!function_exists('mi_filter_manset_articles')) {
                                     <span class="article-reading-time">⏱️ <?php echo $reading_time; ?> dakika okuma süresi</span>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <span class="article-date">📅 <?php echo get_the_date('d F Y'); ?></span>
+                            <span class="article-date">📅 <?php echo mi_get_turkish_date('d F Y'); ?></span>
                         </div>
                     </div>
                 </article>
