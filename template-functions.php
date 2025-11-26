@@ -122,17 +122,11 @@ function mi_get_ui_template_position($post_id) {
 }
 
 // Render section template
-function mi_render_section_template($post) {
-    // Global $post objesini geçici olarak sakla
-    global $post;
-    $original_post = $post;
-    
-    // Section post'unu global $post olarak set et
-    // front-page.php'de zaten setup_postdata yapılmış olabilir, ama emin olmak için tekrar set ediyoruz
-    $post = get_post($post->ID);
-    setup_postdata($post);
-    
-    $section_type = mi_get_section_type($post->ID);
+function mi_render_section_template($section_post) {
+    // front-page.php'de zaten setup_postdata($section) yapılmış
+    // Bu yüzden global $post zaten doğru section'ı gösteriyor
+    // Sadece section type'ı alıp template'i yüklüyoruz
+    $section_type = mi_get_section_type($section_post->ID);
     
     switch ($section_type) {
         case 'aciklama':
@@ -153,14 +147,6 @@ function mi_render_section_template($post) {
         default:
             get_template_part('templates/section', 'default');
             break;
-    }
-    
-    // Global $post objesini geri yükle
-    // wp_reset_postdata() çağırmıyoruz çünkü front-page.php'deki loop'u bozabilir
-    // front-page.php zaten kendi wp_reset_postdata()'sını çağırıyor
-    if ($original_post) {
-        $post = $original_post;
-        setup_postdata($original_post);
     }
 }
 
