@@ -297,10 +297,9 @@ footer p {
         white-space: pre-line;
     }
     
-    /* Mobil görünümde manset articles */
+    /* Mobil görünümde manset articles - zaten flex column */
     .manset-articles {
-        grid-template-columns: 1fr !important;
-        gap: 15px;
+        gap: 20px;
     }
     
     .manset-article {
@@ -3239,8 +3238,7 @@ body.menu-open {
 /* Mobile - Single Column */
 @media (max-width: 600px) {
     .manset-articles {
-        grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
     }
     
     .manset-article {
