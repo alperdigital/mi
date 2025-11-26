@@ -8,7 +8,7 @@ global $post;
 $post_id = isset($post) && isset($post->ID) ? $post->ID : get_the_ID();
 
 $is_front_page = is_front_page();
-$contact_email = get_post_meta($post_id, '_mi_iletisim_email', true) ?: get_option('admin_email');
+$contact_email = get_post_meta($post_id, '_mi_iletisim_email', true) ?: 'memleketisterimcom@gmail.com';
 $response_time = get_post_meta($post_id, '_mi_iletisim_response_time', true) ?: '24-48 Saat';
 $intro_title = get_post_meta($post_id, '_mi_iletisim_intro_title', true) ?: 'Yazılarınızı Paylaşın';
 $intro_text = get_post_meta($post_id, '_mi_iletisim_intro_text', true) ?: 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.';

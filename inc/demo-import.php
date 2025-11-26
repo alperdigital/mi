@@ -149,7 +149,7 @@ function mi_import_demo_content() {
             'content' => 'Bizimle iletişime geçin',
             'active' => '1',
             'order' => 3,
-            'email' => get_option('admin_email'),
+            'email' => 'memleketisterimcom@gmail.com',
             'response_time' => '24-48 Saat',
             'intro_title' => 'Yazılarınızı Paylaşın',
             'intro_text' => 'Görüşlerinizi, önerilerinizi ve yazılarınızı bizimle paylaşın. Değerli katkılarınız yayınlanabilir ve toplumla paylaşılabilir.',
