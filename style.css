@@ -1554,7 +1554,8 @@ footer p {
     padding: 10px 16px;
     border-radius: 6px;
     min-width: 120px;
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    max-width: 150px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
