@@ -39,9 +39,9 @@ function mi_demo_import_page() {
             
             <h3><?php _e('İçe Aktarılacaklar:', 'mi-theme'); ?></h3>
             <ul style="list-style: disc; margin-left: 30px;">
-                <li><?php _e('Ana Sayfa: Başyazı (Tek metin içerik)', 'mi-theme'); ?></li>
-                <li><?php _e('Bölüm 2: Yazılar (Haber listesi)', 'mi-theme'); ?></li>
-                <li><?php _e('Bölüm 3: #EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('Bölüm 1: Başyazı (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('Bölüm 2: #EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('Bölüm 3: Yazılar (Haber listesi)', 'mi-theme'); ?></li>
                 <li><?php _e('Bölüm 4: İletişim', 'mi-theme'); ?></li>
                 <li><?php _e('Örnek Yazılar ve Kategoriler', 'mi-theme'); ?></li>
             </ul>
@@ -112,6 +112,7 @@ function mi_import_demo_content() {
     }
     
     // Create sample sections
+    // Sıralama: Başyazı (0), # içeren bölüm (1), Yazılar (2), İletişim (3)
     $sections = array(
         array(
             'title' => 'Başyazı',
@@ -124,15 +125,6 @@ function mi_import_demo_content() {
             'order' => 0,
         ),
         array(
-            'title' => 'Yazılar',
-            'name' => 'Yazılar',
-            'type' => 'manset',
-            'content' => 'Güncel yazılar ve haberler',
-            'active' => '1',
-            'order' => 1,
-            'posts_per_page' => 12,
-        ),
-        array(
             'title' => '#EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük',
             'name' => '#EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük',
             'type' => 'aciklama',
@@ -140,7 +132,16 @@ function mi_import_demo_content() {
 <p>Ekrem İmamoğlu ve tüm siyasi tutsakların derhal serbest bırakılmasını talep ediyoruz. Adil yargılanma hakkı, savunma hakkı ve masumiyet karinesi herkes için geçerli olmalıdır.</p>
 <p>Özgürlük, demokrasinin olmazsa olmazıdır. Siyasi görüşlerin cezalandırılması, demokrasinin temel ilkeleriyle bağdaşmaz. Tüm siyasi tutsakların özgürlüğüne kavuşması için mücadele etmeye devam edeceğiz.</p>',
             'active' => '1',
+            'order' => 1,
+        ),
+        array(
+            'title' => 'Yazılar',
+            'name' => 'Yazılar',
+            'type' => 'manset',
+            'content' => 'Güncel yazılar ve haberler',
+            'active' => '1',
             'order' => 2,
+            'posts_per_page' => 12,
         ),
         array(
             'title' => 'İletişim',
