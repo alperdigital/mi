@@ -55,7 +55,7 @@ if ($front_page_section_id > 0) {
             $ui_position = mi_get_ui_template_position($section->ID);
             ?>
             
-            <?php if ($section_type !== 'aciklama') : ?>
+            <?php if ($section_type !== 'aciklama' && $section_type !== 'manset' && $section_type !== 'iletisim') : ?>
                 <div class="section-header">
                     <h1 class="section-title"><?php echo esc_html($section_name); ?></h1>
                     <?php if (get_the_excerpt()) : ?>
