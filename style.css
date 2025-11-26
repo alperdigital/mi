@@ -1767,6 +1767,27 @@ footer p {
 
 .post-header {
     margin-bottom: 30px;
+    position: static !important; /* Sticky/fixed özelliğini devre dışı bırak */
+    top: auto !important;
+    z-index: auto !important;
+}
+
+.single-post .post-header {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+}
+
+.single-post .post-title {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+}
+
+.single-post .post-meta {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
 }
 
 .post-category-badge {
