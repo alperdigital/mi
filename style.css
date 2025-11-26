@@ -2708,40 +2708,12 @@ body.menu-open {
         hyphens: auto;
     }
     
-    /* # içeren menü item'ları için özel mobil stil */
-    .nav-menu li.menu-item-has-hash {
-        border-bottom: none;
-        margin: 12px 0;
-        padding: 0;
-        background-color: transparent;
-    }
-    
-    .nav-menu li.menu-item-has-hash:first-child {
-        margin-top: 0;
-    }
-    
-    .nav-menu li.menu-item-has-hash:last-child {
-        margin-bottom: 0;
-    }
-    
+    /* # içeren menü item'ları için mobil stil - masaüstüne benzer satır aralığı */
     .nav-menu li.menu-item-has-hash a {
-        padding: 16px 12px;
-        line-height: 1.6;
+        line-height: 0.6;
         white-space: pre-line;
-        text-align: center;
-        background-color: var(--bg-light);
-        border-radius: 6px;
-        margin: 0;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        display: block;
-        font-size: 14px;
-    }
-    
-    .nav-menu li.menu-item-has-hash a:hover {
-        background-color: rgba(var(--primary-red-rgb), 0.08);
-        border-color: rgba(var(--primary-red-rgb), 0.2);
-        color: var(--primary-red);
-        padding-left: 12px;
+        text-align: left;
+        padding: 20px 0;
     }
     
     .nav-menu li a:hover {
