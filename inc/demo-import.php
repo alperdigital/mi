@@ -190,7 +190,7 @@ function mi_import_demo_content() {
             
             // İletişim özel ayarları
             if ($section_data['type'] === 'iletisim') {
-                update_post_meta($section_id, '_mi_iletisim_email', isset($section_data['email']) ? $section_data['email'] : get_option('admin_email'));
+                update_post_meta($section_id, '_mi_iletisim_email', isset($section_data['email']) ? $section_data['email'] : 'memleketisterimcom@gmail.com');
                 update_post_meta($section_id, '_mi_iletisim_response_time', isset($section_data['response_time']) ? $section_data['response_time'] : '24-48 Saat');
                 if (isset($section_data['intro_title'])) {
                     update_post_meta($section_id, '_mi_iletisim_intro_title', $section_data['intro_title']);
