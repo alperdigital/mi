@@ -31,9 +31,13 @@ get_header();
             <?php endif; ?>
             
             <?php if ($section_type === 'aciklama') : ?>
-                <div class="section-content aciklama-content">
-                    <?php the_content(); ?>
-                </div>
+                <?php if (function_exists('mi_render_section_template')) : ?>
+                    <?php mi_render_section_template(get_post()); ?>
+                <?php else : ?>
+                    <div class="section-content aciklama-content">
+                        <?php the_content(); ?>
+                    </div>
+                <?php endif; ?>
             <?php elseif ($section_type !== 'default') : ?>
                 <?php if (function_exists('mi_render_section_template')) : ?>
                     <?php mi_render_section_template(get_post()); ?>
