@@ -77,39 +77,7 @@ get_header();
             }
             ?>
             
-            <?php
-            // Related posts
-            $related = get_posts(array(
-                'category__in' => wp_get_post_categories(get_the_ID()),
-                'numberposts' => 3,
-                'post__not_in' => array(get_the_ID())
-            ));
-            
-            if ($related) :
-                ?>
-                <div class="related-posts">
-                    <h3 class="related-title">İlgili Haberler</h3>
-                    <div class="related-posts-grid">
-                        <?php foreach ($related as $post) : setup_postdata($post); ?>
-                            <article class="related-post-item">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <div class="related-thumbnail">
-                                        <a href="<?php the_permalink(); ?>">
-                                            <?php the_post_thumbnail('medium', array('alt' => get_the_title())); ?>
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
-                                <h4 class="related-post-title">
-                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                </h4>
-                                <div class="related-post-meta">
-                                    <span><?php echo get_the_date(); ?></span>
-                                </div>
-                            </article>
-                        <?php endforeach; wp_reset_postdata(); ?>
-                    </div>
-                </div>
-            <?php endif; ?>
+            <?php /* İlgili Haberler bölümü kaldırıldı */ ?>
             
         <?php endwhile; ?>
             </div>
