@@ -4,7 +4,9 @@
  * Yazının iki kere geçmemesi için sadece içeriği gösterir
  */
 
-$post_id = get_the_ID();
+// Post ID'yi doğru şekilde al - global $post objesinden
+global $post;
+$post_id = isset($post) && isset($post->ID) ? $post->ID : get_the_ID();
 $signature_count = intval(get_post_meta($post_id, '_mi_aciklama_signatures', true));
 $user_signed = isset($_COOKIE['mi_signed_' . $post_id]) && $_COOKIE['mi_signed_' . $post_id] === '1';
 ?>
