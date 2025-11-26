@@ -104,8 +104,8 @@ function mi_render_social_share($post_id = null, $compact = false) {
                title="Telegram'da Paylaş"
                aria-label="Telegram'da Paylaş">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="12" fill="currentColor"/>
-                    <path d="M5.491 11.865l11.57-4.461c.537-.194 1.006.131.832.943l.001-.001-1.97 9.281c-.146.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.66-.64.135-.954z" fill="#FFFFFF" fill-rule="evenodd" clip-rule="evenodd"/>
+                    <circle cx="12" cy="12" r="12" fill="#0088CC"/>
+                    <path d="M5.491 11.865l11.57-4.461c.537-.194 1.006.131.832.943l.001-.001-1.97 9.281c-.146.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.66-.64.135-.954z" fill="#FFFFFF"/>
                 </svg>
                 <?php if (!$compact) : ?><span>Telegram</span><?php endif; ?>
             </a>
