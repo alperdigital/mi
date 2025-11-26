@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
                 }
             },
             error: function() {
-                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                // Hata durumunda sessizce butonu geri aktif et (mesaj gösterme)
                 $btn.prop('disabled', false);
                 $btn.removeClass('loading');
             }
