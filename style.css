@@ -1549,9 +1549,12 @@ footer p {
 .share-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 10px 16px;
     border-radius: 6px;
+    min-width: 120px;
+    flex: 1 1 auto;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -1938,8 +1941,9 @@ footer p {
     }
     
     .share-btn {
-        flex: 1;
+        flex: 1 1 auto;
         min-width: 120px;
+        max-width: 150px;
         justify-content: center;
     }
     
