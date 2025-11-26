@@ -115,7 +115,7 @@ header p {
 /* # içeren menü item'ları desktop'ta alt alta (2 satır formatında) */
 .nav-menu li.menu-item-has-hash a {
     white-space: pre-line;
-    line-height: 0.8; /* Satırlar arası mesafe */
+    line-height: 0.6; /* Satırlar arası mesafe */
     text-align: center;
     padding: 2px 0; /* Üst-alt padding'i azalt */
 }
