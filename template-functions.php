@@ -128,11 +128,9 @@ function mi_render_section_template($post) {
     $original_post = $post;
     
     // Section post'unu global $post olarak set et
-    // Eğer $post zaten doğru section ise, tekrar set etmeye gerek yok
-    if (!isset($post) || $post->ID != $post->ID) {
-        $post = get_post($post->ID);
-        setup_postdata($post);
-    }
+    // front-page.php'de zaten setup_postdata yapılmış olabilir, ama emin olmak için tekrar set ediyoruz
+    $post = get_post($post->ID);
+    setup_postdata($post);
     
     $section_type = mi_get_section_type($post->ID);
     
@@ -157,9 +155,10 @@ function mi_render_section_template($post) {
             break;
     }
     
-    // Global $post objesini geri yükle (sadece orijinal post varsa)
+    // Global $post objesini geri yükle
     // wp_reset_postdata() çağırmıyoruz çünkü front-page.php'deki loop'u bozabilir
-    if ($original_post && $original_post->ID != $post->ID) {
+    // front-page.php zaten kendi wp_reset_postdata()'sını çağırıyor
+    if ($original_post) {
         $post = $original_post;
         setup_postdata($original_post);
     }
