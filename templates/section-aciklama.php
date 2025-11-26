@@ -69,10 +69,10 @@ jQuery(document).ready(function($) {
                     $btn.find('.signature-text').text('İmzanız Atıldı');
                     $btn.find('.count-number').text(response.data.count);
                     
-                    // Cookie set et (30 gün)
-                    var date = new Date();
-                    date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
-                    document.cookie = 'mi_signed_' + postId + '=1; expires=' + date.toUTCString() + '; path=/';
+                    // Cookie set et - sayfa her açıldığında 1 kere tıklanabilir
+                    // Session cookie kullan (tarayıcı kapanınca silinir, sayfa yenilendiğinde tekrar tıklanabilir)
+                    // Aynı sayfa açıkken tekrar tıklanamaz
+                    document.cookie = 'mi_signed_' + postId + '=1; path=/';
                 } else {
                     alert(response.data.message || 'Bir hata oluştu.');
                     $btn.prop('disabled', false);
