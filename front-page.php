@@ -75,13 +75,7 @@ if ($front_page_section_id > 0) {
                     <?php mi_render_section_template($section); ?>
                 <?php else : ?>
                     <div class="section-content aciklama-content">
-                        <?php 
-                        $content = get_the_content();
-                        remove_filter('the_content', 'wpautop');
-                        $content = apply_filters('the_content', $content);
-                        add_filter('the_content', 'wpautop');
-                        echo $content;
-                        ?>
+                        <?php the_content(); ?>
                     </div>
                 <?php endif; ?>
             <?php elseif ($section_type !== 'default') : ?>
