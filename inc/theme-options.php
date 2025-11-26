@@ -34,6 +34,7 @@ function mi_theme_options_page() {
         update_option('mi_enable_related_posts', isset($_POST['mi_enable_related_posts']) ? 1 : 0);
         update_option('mi_related_posts_count', absint($_POST['mi_related_posts_count']));
         update_option('mi_enable_single_page', isset($_POST['mi_enable_single_page']) ? 1 : 0);
+        update_option('mi_front_page_section', isset($_POST['mi_front_page_section']) ? intval($_POST['mi_front_page_section']) : 0);
         
         echo '<div class="notice notice-success"><p>' . __('Ayarlar kaydedildi!', 'mi-theme') . '</p></div>';
     }
@@ -51,6 +52,35 @@ function mi_theme_options_page() {
     $related_posts = get_option('mi_enable_related_posts', 1);
     $related_count = get_option('mi_related_posts_count', 3);
     $single_page = get_option('mi_enable_single_page', 0);
+    
+    // Ana sayfa section seçimi için aktif section'ları al
+    $active_sections = get_posts(array(
+        'post_type' => 'mi_section',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_mi_section_active',
+                'value' => '1',
+                'compare' => '='
+            )
+        ),
+        'orderby' => 'menu_order',
+        'order' => 'ASC'
+    ));
+    
+    // Default: Başyazı (aciklama tipinde, menu_order=0)
+    $default_section_id = 0;
+    foreach ($active_sections as $section) {
+        $section_type = get_post_meta($section->ID, '_mi_section_type', true);
+        $section_name = mi_get_section_name($section->ID);
+        $section_name_lower = mb_strtolower($section_name, 'UTF-8');
+        if ($section_type === 'aciklama' && (strpos($section_name_lower, 'başyazı') !== false || strpos($section_name_lower, 'basyazi') !== false)) {
+            $default_section_id = $section->ID;
+            break;
+        }
+    }
+    
+    $front_page_section = get_option('mi_front_page_section', $default_section_id);
     ?>
     <div class="wrap mi-theme-options">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -68,6 +98,9 @@ function mi_theme_options_page() {
                 </a>
                 <a href="#features" class="nav-tab">
                     <span class="dashicons dashicons-admin-plugins"></span> <?php _e('Özellikler', 'mi-theme'); ?>
+                </a>
+                <a href="#homepage" class="nav-tab">
+                    <span class="dashicons dashicons-admin-home"></span> <?php _e('Ana Sayfa', 'mi-theme'); ?>
                 </a>
                 <a href="#advanced" class="nav-tab">
                     <span class="dashicons dashicons-admin-tools"></span> <?php _e('Gelişmiş', 'mi-theme'); ?>
@@ -221,6 +254,51 @@ function mi_theme_options_page() {
                                     </p>
                                 </label>
                             </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div id="homepage" class="tab-content" style="display:none;">
+                <div class="mi-tab-header">
+                    <h3><?php _e('Ana Sayfa Ayarları', 'mi-theme'); ?></h3>
+                    <p><?php _e('Ana sayfanızın hangi bölümü göstereceğini seçebilirsiniz. Ana sayfa, seçtiğiniz bölümün içeriği ve görünümüyle bire bir aynı olacaktır.', 'mi-theme'); ?></p>
+                </div>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">
+                            <label for="mi_front_page_section"><?php _e('Ana Sayfa Bölümü', 'mi-theme'); ?></label>
+                        </th>
+                        <td>
+                            <select name="mi_front_page_section" id="mi_front_page_section" class="regular-text">
+                                <option value="0" <?php selected($front_page_section, 0); ?>><?php _e('-- Seçiniz (Varsayılan: Başyazı) --', 'mi-theme'); ?></option>
+                                <?php
+                                if (!empty($active_sections)) {
+                                    foreach ($active_sections as $section) {
+                                        $section_name = mi_get_section_name($section->ID);
+                                        $section_type = get_post_meta($section->ID, '_mi_section_type', true);
+                                        $type_labels = array(
+                                            'aciklama' => 'Açıklama',
+                                            'manset' => 'Manşet',
+                                            'kararlar' => 'Kararlar',
+                                            'iletisim' => 'İletişim',
+                                            'custom' => 'Özel',
+                                            'default' => 'Varsayılan'
+                                        );
+                                        $type_label = isset($type_labels[$section_type]) ? $type_labels[$section_type] : 'Varsayılan';
+                                        $selected = selected($front_page_section, $section->ID, false);
+                                        echo '<option value="' . esc_attr($section->ID) . '" ' . $selected . '>' . esc_html($section_name) . ' (' . esc_html($type_label) . ')</option>';
+                                    }
+                                } else {
+                                    echo '<option value="0">' . __('Aktif bölüm bulunamadı', 'mi-theme') . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <p class="description">
+                                <?php _e('Ana sayfanızın hangi bölümü göstereceğini seçin. Varsayılan olarak "Başyazı" bölümü seçilidir.', 'mi-theme'); ?>
+                                <br>
+                                <strong><?php _e('Not:', 'mi-theme'); ?></strong> <?php _e('Ana sayfa, seçtiğiniz bölümün içeriği ve görünümüyle bire bir aynı olacaktır.', 'mi-theme'); ?>
+                            </p>
                         </td>
                     </tr>
                 </table>
