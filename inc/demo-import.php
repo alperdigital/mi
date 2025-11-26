@@ -39,10 +39,10 @@ function mi_demo_import_page() {
             
             <h3><?php _e('İçe Aktarılacaklar:', 'mi-theme'); ?></h3>
             <ul style="list-style: disc; margin-left: 30px;">
-                <li><?php _e('Bölüm 1: Başyazı (Tek metin içerik)', 'mi-theme'); ?></li>
-                <li><?php _e('Bölüm 2: #EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük (Tek metin içerik)', 'mi-theme'); ?></li>
-                <li><?php _e('Bölüm 3: Yazılar (Haber listesi)', 'mi-theme'); ?></li>
-                <li><?php _e('Bölüm 4: İletişim', 'mi-theme'); ?></li>
+                <li><?php _e('1. Bölüm: Başyazı (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('2. Bölüm: #EkremİmamoğlunaÖzgürlük #TümSiyasiTutsaklaraÖzgürlük (Tek metin içerik)', 'mi-theme'); ?></li>
+                <li><?php _e('3. Bölüm: Yazılar (Haber listesi)', 'mi-theme'); ?></li>
+                <li><?php _e('4. Bölüm: İletişim', 'mi-theme'); ?></li>
                 <li><?php _e('Örnek Yazılar ve Kategoriler', 'mi-theme'); ?></li>
             </ul>
             
@@ -113,6 +113,7 @@ function mi_import_demo_content() {
     
     // Create sample sections
     // Sıralama: Başyazı (0), # içeren bölüm (1), Yazılar (2), İletişim (3)
+    // Not: Yazılar 3. bölüm olacak şekilde order değerleri: Başyazı=0, # içeren=1, Yazılar=2, İletişim=3
     $sections = array(
         array(
             'title' => 'Başyazı',
@@ -140,7 +141,7 @@ function mi_import_demo_content() {
             'type' => 'manset',
             'content' => 'Güncel yazılar ve haberler',
             'active' => '1',
-            'order' => 2,
+            'order' => 2, // 3. bölüm (0, 1, 2, 3 sıralamasında)
             'posts_per_page' => 12,
         ),
         array(
@@ -149,7 +150,7 @@ function mi_import_demo_content() {
             'type' => 'iletisim',
             'content' => 'Bizimle iletişime geçin',
             'active' => '1',
-            'order' => 3,
+            'order' => 3, // 4. bölüm (son)
             'email' => 'memleketisterimcom@gmail.com',
             'response_time' => '24-48 Saat',
             'intro_title' => 'Yazılarınızı Paylaşın',
