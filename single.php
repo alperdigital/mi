@@ -11,7 +11,7 @@ get_header();
         <div class="content-wrapper <?php echo mi_has_sidebar() ? 'has-sidebar' : 'no-sidebar'; ?>">
             <div class="main-content">
         <?php while (have_posts()) : the_post(); ?>
-            <?php mi_breadcrumbs(); ?>
+            <?php /* Breadcrumb kaldırıldı - UI'da gösterilmiyor */ ?>
             
             <article id="post-<?php the_ID(); ?>" <?php post_class('single-post'); ?>>
                 <header class="post-header">
