@@ -47,10 +47,14 @@
                             $section_url = get_permalink($section->ID);
                         }
                         
-                        // Ana sayfada Başyazı aktif görünsün
+                        // Ana sayfada sadece Başyazı aktif görünsün
                         $current_class = '';
-                        if (is_front_page() && $section_type === 'aciklama') {
-                            $current_class = 'current-menu-item';
+                        if (is_front_page()) {
+                            // Sadece "Başyazı" bölümü aktif olsun (# içeren bölüm aktif olmasın)
+                            $section_name_lower = mb_strtolower($section_name, 'UTF-8');
+                            if ($section_type === 'aciklama' && (strpos($section_name_lower, 'başyazı') !== false || strpos($section_name_lower, 'basyazi') !== false)) {
+                                $current_class = 'current-menu-item';
+                            }
                         } elseif (is_singular('mi_section') && get_the_ID() == $section->ID) {
                             $current_class = 'current-menu-item';
                         }
