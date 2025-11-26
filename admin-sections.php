@@ -563,8 +563,48 @@ function mi_section_column_content($column, $post_id) {
                 'iletisim' => '📧',
                 'custom' => '🎨'
             );
-            $icon = isset($type_icons[$type]) ? $type_icons[$type] : '📄';
+            $icon = isset($type_icons[$type]) ? $type_icons[$icon] : '📄';
             echo '<span style="font-size: 18px;">' . $icon . '</span> ' . $type_label;
+            break;
+        case 'menu_order':
+            $current_order = get_post($post_id)->menu_order;
+            $all_sections = get_posts(array(
+                'post_type' => 'mi_section',
+                'posts_per_page' => -1,
+                'orderby' => 'menu_order',
+                'order' => 'ASC',
+                'post_status' => 'any'
+            ));
+            
+            $current_index = 0;
+            $total = count($all_sections);
+            foreach ($all_sections as $index => $section) {
+                if ($section->ID == $post_id) {
+                    $current_index = $index;
+                    break;
+                }
+            }
+            
+            echo '<div style="display: flex; align-items: center; gap: 8px;">';
+            echo '<span style="font-weight: bold; min-width: 30px; text-align: center;">' . $current_order . '</span>';
+            
+            // Yukarı butonu
+            if ($current_index > 0) {
+                $prev_id = $all_sections[$current_index - 1]->ID;
+                echo '<button type="button" class="button button-small mi-order-up" data-post-id="' . $post_id . '" data-target-id="' . $prev_id . '" title="Yukarı Taşı">⬆️</button>';
+            } else {
+                echo '<button type="button" class="button button-small" disabled style="opacity: 0.3;">⬆️</button>';
+            }
+            
+            // Aşağı butonu
+            if ($current_index < $total - 1) {
+                $next_id = $all_sections[$current_index + 1]->ID;
+                echo '<button type="button" class="button button-small mi-order-down" data-post-id="' . $post_id . '" data-target-id="' . $next_id . '" title="Aşağı Taşı">⬇️</button>';
+            } else {
+                echo '<button type="button" class="button button-small" disabled style="opacity: 0.3;">⬇️</button>';
+            }
+            
+            echo '</div>';
             break;
         case 'active':
             $active = get_post_meta($post_id, '_mi_section_active', true);
@@ -588,4 +628,99 @@ function mi_section_sortable_columns($columns) {
     return $columns;
 }
 add_filter('manage_edit-mi_section_sortable_columns', 'mi_section_sortable_columns');
+
+// Enqueue admin scripts for order management
+function mi_enqueue_section_order_scripts($hook) {
+    if ('edit.php' !== $hook || get_current_screen()->post_type !== 'mi_section') {
+        return;
+    }
+    
+    wp_enqueue_script('jquery');
+    wp_add_inline_script('jquery', '
+        jQuery(document).ready(function($) {
+            $(".mi-order-up, .mi-order-down").on("click", function(e) {
+                e.preventDefault();
+                var $btn = $(this);
+                var postId = $btn.data("post-id");
+                var targetId = $btn.data("target-id");
+                var direction = $btn.hasClass("mi-order-up") ? "up" : "down";
+                
+                if ($btn.prop("disabled")) {
+                    return;
+                }
+                
+                $btn.prop("disabled", true).text("⏳");
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: "POST",
+                    data: {
+                        action: "mi_update_section_order",
+                        post_id: postId,
+                        target_id: targetId,
+                        direction: direction,
+                        nonce: "' . wp_create_nonce('mi_section_order_nonce') . '"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert("Hata: " + (response.data || "Sıralama güncellenemedi"));
+                            $btn.prop("disabled", false).text(direction === "up" ? "⬆️" : "⬇️");
+                        }
+                    },
+                    error: function() {
+                        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+                        $btn.prop("disabled", false).text(direction === "up" ? "⬆️" : "⬇️");
+                    }
+                });
+            });
+        });
+    ');
+}
+add_action('admin_enqueue_scripts', 'mi_enqueue_section_order_scripts');
+
+// AJAX handler for updating section order
+function mi_update_section_order() {
+    check_ajax_referer('mi_section_order_nonce', 'nonce');
+    
+    if (!current_user_can('edit_posts')) {
+        wp_send_json_error(array('message' => 'Yetkiniz yok'));
+        return;
+    }
+    
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    $target_id = isset($_POST['target_id']) ? intval($_POST['target_id']) : 0;
+    $direction = isset($_POST['direction']) ? sanitize_text_field($_POST['direction']) : '';
+    
+    if ($post_id <= 0 || $target_id <= 0) {
+        wp_send_json_error(array('message' => 'Geçersiz bölüm ID'));
+        return;
+    }
+    
+    $post = get_post($post_id);
+    $target = get_post($target_id);
+    
+    if (!$post || !$target || $post->post_type !== 'mi_section' || $target->post_type !== 'mi_section') {
+        wp_send_json_error(array('message' => 'Geçersiz bölüm'));
+        return;
+    }
+    
+    // Swap menu_order values
+    $post_order = $post->menu_order;
+    $target_order = $target->menu_order;
+    
+    wp_update_post(array(
+        'ID' => $post_id,
+        'menu_order' => $target_order
+    ));
+    
+    wp_update_post(array(
+        'ID' => $target_id,
+        'menu_order' => $post_order
+    ));
+    
+    wp_send_json_success(array('message' => 'Sıralama güncellendi'));
+}
+add_action('wp_ajax_mi_update_section_order', 'mi_update_section_order');
 
