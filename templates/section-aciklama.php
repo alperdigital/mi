@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
                     // Aynı sayfa açıkken tekrar tıklanamaz
                     document.cookie = 'mi_signed_' + postId + '=1; path=/';
                 } else {
-                    alert(response.data.message || 'Bir hata oluştu.');
+                    // Hata durumunda sessizce butonu geri aktif et (mesaj gösterme)
                     $btn.prop('disabled', false);
                     $btn.removeClass('loading');
                 }

@@ -194,17 +194,11 @@ if (!function_exists('mi_add_signature')) {
             return;
         }
         
-        // Post'un aciklama tipinde olduğunu kontrol et
-        $section_type = get_post_meta($post_id, '_mi_section_type', true);
-        if ($section_type !== 'aciklama') {
-            wp_send_json_error(array('message' => 'Bu özellik sadece Başyazı bölümü için geçerlidir.'));
-            return;
-        }
-        
         // Cookie kontrolü - sayfa her açıldığında 1 kere tıklanabilir
         $cookie_name = 'mi_signed_' . $post_id;
         if (isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] === '1') {
-            wp_send_json_error(array('message' => 'Bu sayfada zaten imza attınız.'));
+            // Sessizce başarısız dön (kullanıcıya hata gösterme)
+            wp_send_json_error(array('message' => ''));
             return;
         }
         
@@ -214,8 +208,7 @@ if (!function_exists('mi_add_signature')) {
         update_post_meta($post_id, '_mi_aciklama_signatures', $new_count);
         
         wp_send_json_success(array(
-            'count' => number_format_i18n($new_count),
-            'message' => 'İmzanız başarıyla eklendi.'
+            'count' => number_format_i18n($new_count)
         ));
     }
 }
