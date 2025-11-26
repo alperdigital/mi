@@ -42,13 +42,6 @@ $quick_button_text = get_post_meta($post_id, '_mi_iletisim_quick_button_text', t
 
 <div class="iletisim-section <?php echo $is_front_page ? 'front-page-iletisim' : ''; ?>">
     <div class="container">
-        <div class="iletisim-intro">
-            <div class="intro-icon">📧</div>
-            <h2>Bize Ulaşın</h2>
-            <h1><?php echo esc_html($intro_title); ?></h1>
-            <p><?php echo esc_html($intro_text); ?></p>
-        </div>
-        
         <div class="iletisim-content">
             <?php if ($show_info) : ?>
             <div class="iletisim-info">
@@ -63,23 +56,7 @@ $quick_button_text = get_post_meta($post_id, '_mi_iletisim_quick_button_text', t
                     </div>
                 </div>
                 
-                <div class="info-item">
-                    <div class="info-icon">⏰</div>
-                    <div class="info-content">
-                        <h3>Yanıt Süresi</h3>
-                        <p class="info-value"><?php echo esc_html($response_time); ?></p>
-                        <p><?php echo esc_html($info_response_text); ?></p>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-icon">📝</div>
-                    <div class="info-content">
-                        <h3>Yazı Değerlendirme</h3>
-                        <p class="info-value">3-5 Gün</p>
-                        <p><?php echo esc_html($info_evaluation_text); ?></p>
-                    </div>
-                </div>
+                <?php /* Yanıt Süresi ve Yazı Değerlendirme kaldırıldı */ ?>
             </div>
             <?php endif; ?>
             

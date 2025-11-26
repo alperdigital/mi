@@ -36,24 +36,28 @@ get_header();
                 
                 // Section tipine göre template yükle
                 if (function_exists('mi_render_section_template')) {
-                    // Tüm section tiplerinde başlık göster
-                    ?>
-                    <div class="container">
-                        <div class="section-header">
-                            <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php 
-                                // # içeren başlıklarda her hashtag'i ayrı satıra al
-                                if (strpos($section_name, '#') !== false) {
-                                    // Her boşluktan sonra gelen # karakterini yeni satıra al
-                                    $formatted_name = preg_replace('/\s+#/', "\n#", $section_name);
-                                    // HTML'de <br> etiketlerine çevir
-                                    echo nl2br(esc_html($formatted_name));
-                                } else {
-                                    echo esc_html($section_name);
-                                }
-                            ?></h2>
+                    // Başlık gösterimi - sadece manset (Yazılar) bölümünde başlık gösterme
+                    $section_type = get_post_meta($section->ID, '_mi_section_type', true);
+                    if ($section_type !== 'manset') {
+                        // Manset dışındaki bölümlerde başlık göster
+                        ?>
+                        <div class="container">
+                            <div class="section-header">
+                                <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php 
+                                    // # içeren başlıklarda her hashtag'i ayrı satıra al
+                                    if (strpos($section_name, '#') !== false) {
+                                        // Her boşluktan sonra gelen # karakterini yeni satıra al
+                                        $formatted_name = preg_replace('/\s+#/', "\n#", $section_name);
+                                        // HTML'de <br> etiketlerine çevir
+                                        echo nl2br(esc_html($formatted_name));
+                                    } else {
+                                        echo esc_html($section_name);
+                                    }
+                                ?></h2>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
+                    }
                     mi_render_section_template($section);
                 } else {
                     // Fallback: Basit içerik gösterimi

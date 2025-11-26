@@ -65,13 +65,13 @@ header h1 {
 }
 
 header h1 a {
-    color: var(--primary-red);
+    color: #8B1538; /* Daha koyu kırmızı - memleketisterim başlığı için */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 header h1 a:hover {
-    color: var(--primary-red-dark);
+    color: #6B0F28; /* Hover için daha da koyu */
 }
 
 header p {
@@ -601,10 +601,11 @@ footer p {
     background-color: var(--primary-red-dark);
 }
 
+/* Yazılar bölümü - Desktop'ta alt alta liste */
 .manset-articles {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .manset-article {
@@ -1045,10 +1046,10 @@ footer p {
     text-transform: none; /* Türkçe karakterler için uppercase kullanmıyoruz */
 }
 
-/* # içeren başlıklar için punto küçültme */
+/* # içeren başlıklar için punto küçültme - Desktop'ta alt alta */
 .section-title[data-has-hash="true"] {
     font-size: 28px;
-    white-space: normal;
+    white-space: pre-line; /* Desktop'ta alt alta görünsün */
     line-height: 1.6;
     display: block;
 }
