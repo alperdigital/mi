@@ -45,7 +45,7 @@ get_header();
                 </div>
                 
                 <div class="post-share-section">
-                    <h3 class="share-title">Bu Haberi Paylaş</h3>
+                    <h3 class="share-title">Bu Yazıyı Paylaş</h3>
                     <?php mi_render_social_share(get_the_ID(), false); ?>
                 </div>
                 
