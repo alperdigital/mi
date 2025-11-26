@@ -65,13 +65,13 @@ header h1 {
 }
 
 header h1 a {
-    color: #dc0000; /* Memleket İsterim logosu rengi */
+    color: #dc0006; /* Memleket İsterim logosu rengi */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 header h1 a:hover {
-    color: #b30000; /* Hover için daha koyu */
+    color: #b30005; /* Hover için daha koyu */
 }
 
 header p {
