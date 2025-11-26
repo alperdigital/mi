@@ -45,7 +45,7 @@ $quick_button_text = get_post_meta($post_id, '_mi_iletisim_quick_button_text', t
         <div class="iletisim-content">
             <?php if ($show_info) : ?>
             <div class="iletisim-info">
-                <h2><?php echo esc_html($info_title); ?></h2>
+                <?php /* "İletişim Bilgileri" başlığı kaldırıldı */ ?>
                 
                 <div class="info-item">
                     <div class="info-icon">📧</div>
