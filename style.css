@@ -921,8 +921,8 @@ footer p {
 }
 
 /* Açıklama Section Styles */
-/* Signature Button Styles */
-.aciklama-signature {
+/* Signature Button Styles - Yazının Sonuna İliştirilmiş */
+.aciklama-signature-inline {
     margin-top: 30px;
     padding-top: 20px;
     border-top: 2px solid var(--border-color);

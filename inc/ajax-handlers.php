@@ -201,24 +201,10 @@ if (!function_exists('mi_add_signature')) {
             return;
         }
         
-        // Cookie kontrolü (aynı kullanıcı birden fazla imza atmasın)
+        // Cookie kontrolü - sayfa her açıldığında 1 kere tıklanabilir
         $cookie_name = 'mi_signed_' . $post_id;
         if (isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] === '1') {
-            wp_send_json_error(array('message' => 'Zaten imza attınız.'));
-            return;
-        }
-        
-        // IP bazlı kontrol (opsiyonel - daha güvenli)
-        $user_ip = $_SERVER['REMOTE_ADDR'];
-        $signed_ips = get_post_meta($post_id, '_mi_aciklama_signed_ips', true);
-        if (!is_array($signed_ips)) {
-            $signed_ips = array();
-        }
-        
-        // Aynı IP'den son 24 saat içinde imza atılmış mı kontrol et
-        $recent_time = time() - (24 * 60 * 60); // 24 saat önce
-        if (isset($signed_ips[$user_ip]) && $signed_ips[$user_ip] > $recent_time) {
-            wp_send_json_error(array('message' => 'Bu IP adresinden yakın zamanda imza atıldı.'));
+            wp_send_json_error(array('message' => 'Bu sayfada zaten imza attınız.'));
             return;
         }
         
@@ -226,10 +212,6 @@ if (!function_exists('mi_add_signature')) {
         $current_count = intval(get_post_meta($post_id, '_mi_aciklama_signatures', true));
         $new_count = $current_count + 1;
         update_post_meta($post_id, '_mi_aciklama_signatures', $new_count);
-        
-        // IP'yi kaydet
-        $signed_ips[$user_ip] = time();
-        update_post_meta($post_id, '_mi_aciklama_signed_ips', $signed_ips);
         
         wp_send_json_success(array(
             'count' => number_format_i18n($new_count),

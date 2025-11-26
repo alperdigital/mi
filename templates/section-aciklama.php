@@ -22,17 +22,18 @@ $user_signed = isset($_COOKIE['mi_signed_' . $post_id]) && $_COOKIE['mi_signed_'
             add_filter('the_content', 'wpautop');
             echo $content;
             ?>
-        </div>
-        
-        <div class="aciklama-signature">
-            <button type="button" 
-                    class="signature-btn <?php echo $user_signed ? 'signed' : ''; ?>" 
-                    data-post-id="<?php echo esc_attr($post_id); ?>"
-                    <?php echo $user_signed ? 'disabled' : ''; ?>>
-                <span class="signature-icon">✍️</span>
-                <span class="signature-text"><?php echo $user_signed ? 'İmzanız Atıldı' : 'İmza At'; ?></span>
-                <span class="signature-count">(<span class="count-number"><?php echo number_format_i18n($signature_count); ?></span>)</span>
-            </button>
+            
+            <!-- İmza At Butonu - Yazının Sonuna Eklendi -->
+            <div class="aciklama-signature-inline">
+                <button type="button" 
+                        class="signature-btn <?php echo $user_signed ? 'signed' : ''; ?>" 
+                        data-post-id="<?php echo esc_attr($post_id); ?>"
+                        <?php echo $user_signed ? 'disabled' : ''; ?>>
+                    <span class="signature-icon">✍️</span>
+                    <span class="signature-text"><?php echo $user_signed ? 'İmzanız Atıldı' : 'İmza At'; ?></span>
+                    <span class="signature-count">(<span class="count-number"><?php echo number_format_i18n($signature_count); ?></span>)</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
