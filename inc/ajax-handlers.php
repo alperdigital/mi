@@ -190,7 +190,15 @@ if (!function_exists('mi_add_signature')) {
         $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
         
         if ($post_id <= 0) {
-            wp_send_json_error(array('message' => 'Geçersiz bölüm ID.'));
+            wp_send_json_error(array('message' => ''));
+            return;
+        }
+        
+        // Post'un aciklama (Başyazı) tipinde olduğunu kontrol et
+        $section_type = get_post_meta($post_id, '_mi_section_type', true);
+        if ($section_type !== 'aciklama') {
+            // Sessizce başarısız dön (kullanıcıya hata gösterme)
+            wp_send_json_error(array('message' => ''));
             return;
         }
         
