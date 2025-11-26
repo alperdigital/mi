@@ -51,12 +51,12 @@ jQuery(document).ready(function($) {
         
         // AJAX request
         $.ajax({
-            url: mi_ajax.ajax_url,
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
             type: 'POST',
             data: {
                 action: 'mi_add_signature',
                 post_id: postId,
-                nonce: mi_ajax.nonce
+                nonce: '<?php echo wp_create_nonce('mi_signature_nonce'); ?>'
             },
             beforeSend: function() {
                 $btn.prop('disabled', true);

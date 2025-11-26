@@ -115,12 +115,6 @@ function mi_enqueue_scripts() {
             true
         );
     }
-    
-    // Localize script for AJAX
-    wp_localize_script('jquery', 'mi_ajax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('mi_signature_nonce')
-    ));
 }
 add_action('wp_enqueue_scripts', 'mi_enqueue_scripts');
 
