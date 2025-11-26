@@ -43,11 +43,9 @@ get_header();
                             <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php 
                                 // # içeren başlıklarda her hashtag'i ayrı satıra al
                                 if (strpos($section_name, '#') !== false) {
-                                    // Her # karakterinden önceki boşluğu yeni satıra çevir
+                                    // Her boşluktan sonra gelen # karakterini yeni satıra al
                                     $formatted_name = preg_replace('/\s+#/', "\n#", $section_name);
-                                    // Eğer başta # varsa ve önünde boşluk yoksa, ilk #'dan sonraki boşluğu kontrol et
-                                    // Her # karakterinden sonraki kelimeyi ayrı satıra al
-                                    $formatted_name = preg_replace('/(#\S+)\s+(#\S+)/', "$1\n$2", $formatted_name);
+                                    // HTML'de <br> etiketlerine çevir
                                     echo nl2br(esc_html($formatted_name));
                                 } else {
                                     echo esc_html($section_name);
@@ -65,11 +63,9 @@ get_header();
                             <h2 class="section-title" <?php if (strpos($section_name, '#') !== false) : ?>data-has-hash="true"<?php endif; ?>><?php 
                                 // # içeren başlıklarda her hashtag'i ayrı satıra al
                                 if (strpos($section_name, '#') !== false) {
-                                    // Her # karakterinden önceki boşluğu yeni satıra çevir
+                                    // Her boşluktan sonra gelen # karakterini yeni satıra al
                                     $formatted_name = preg_replace('/\s+#/', "\n#", $section_name);
-                                    // Eğer başta # varsa ve önünde boşluk yoksa, ilk #'dan sonraki boşluğu kontrol et
-                                    // Her # karakterinden sonraki kelimeyi ayrı satıra al
-                                    $formatted_name = preg_replace('/(#\S+)\s+(#\S+)/', "$1\n$2", $formatted_name);
+                                    // HTML'de <br> etiketlerine çevir
                                     echo nl2br(esc_html($formatted_name));
                                 } else {
                                     echo esc_html($section_name);
