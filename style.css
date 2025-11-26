@@ -71,7 +71,7 @@ header h1 a {
 }
 
 header h1 a:hover {
-    color: #b30005; /* Hover için daha koyu */
+    color: #dc0006; /* Hover'da da aynı renk */
 }
 
 header p {
