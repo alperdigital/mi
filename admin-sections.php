@@ -563,7 +563,7 @@ function mi_section_column_content($column, $post_id) {
                 'iletisim' => '📧',
                 'custom' => '🎨'
             );
-            $icon = isset($type_icons[$type]) ? $type_icons[$icon] : '📄';
+            $icon = isset($type_icons[$type]) ? $type_icons[$type] : '📄';
             echo '<span style="font-size: 18px;">' . $icon . '</span> ' . $type_label;
             break;
         case 'menu_order':
