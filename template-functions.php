@@ -123,6 +123,12 @@ function mi_get_ui_template_position($post_id) {
 
 // Render section template
 function mi_render_section_template($post) {
+    // Global $post objesini set et ki template'lerde doğru ID'yi alsın
+    global $post;
+    $original_post = $post;
+    $post = get_post($post->ID);
+    setup_postdata($post);
+    
     $section_type = mi_get_section_type($post->ID);
     
     switch ($section_type) {
@@ -144,6 +150,12 @@ function mi_render_section_template($post) {
         default:
             get_template_part('templates/section', 'default');
             break;
+    }
+    
+    // Global $post objesini geri yükle
+    $post = $original_post;
+    if ($original_post) {
+        setup_postdata($original_post);
     }
 }
 

@@ -3,7 +3,10 @@
  * Template: İletişim
  */
 
-$post_id = get_the_ID();
+// Post ID'yi doğru şekilde al - global $post objesinden
+global $post;
+$post_id = isset($post) && isset($post->ID) ? $post->ID : get_the_ID();
+
 $is_front_page = is_front_page();
 $contact_email = get_post_meta($post_id, '_mi_iletisim_email', true) ?: get_option('admin_email');
 $response_time = get_post_meta($post_id, '_mi_iletisim_response_time', true) ?: '24-48 Saat';
