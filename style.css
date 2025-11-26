@@ -1938,13 +1938,15 @@ footer p {
     
     .share-buttons {
         width: 100%;
-        justify-content: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
     }
     
     .share-btn {
-        flex: 1 1 auto;
+        flex: 1 1 0;
         min-width: 120px;
-        max-width: 150px;
+        max-width: none;
         justify-content: center;
     }
     
