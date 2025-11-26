@@ -52,7 +52,7 @@ if ($front_page_section_id > 0) {
             setup_postdata($section);
             $section_type = mi_get_section_type($section->ID);
             $section_name = mi_get_section_name($section->ID);
-            $ui_position = get_post_meta($section->ID, '_mi_ui_template', true) ?: 'default';
+            $ui_position = mi_get_ui_template_position($section->ID);
             ?>
             
             <?php if ($section_type !== 'aciklama') : ?>
@@ -71,13 +71,9 @@ if ($front_page_section_id > 0) {
             <?php endif; ?>
             
             <?php if ($section_type === 'aciklama') : ?>
-                <?php if (function_exists('mi_render_section_template')) : ?>
-                    <?php mi_render_section_template($section); ?>
-                <?php else : ?>
-                    <div class="section-content aciklama-content">
-                        <?php the_content(); ?>
-                    </div>
-                <?php endif; ?>
+                <div class="section-content aciklama-content">
+                    <?php the_content(); ?>
+                </div>
             <?php elseif ($section_type !== 'default') : ?>
                 <?php if (function_exists('mi_render_section_template')) : ?>
                     <?php mi_render_section_template($section); ?>
