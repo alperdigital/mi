@@ -38,6 +38,7 @@
                     echo '<ul class="nav-menu">';
                     foreach ($sections as $section) {
                         $section_name = mi_get_section_name($section->ID);
+                        $section_type = get_post_meta($section->ID, '_mi_section_type', true);
                         
                         // Tek sayfa modunda hash link, değilse normal permalink
                         if ($single_page_mode && is_front_page()) {
@@ -46,8 +47,19 @@
                             $section_url = get_permalink($section->ID);
                         }
                         
-                        $current_class = (is_singular('mi_section') && get_the_ID() == $section->ID) ? 'current-menu-item' : '';
-                        echo '<li class="' . esc_attr($current_class) . '"><a href="' . esc_url($section_url) . '" data-section-id="' . esc_attr($section->ID) . '">' . esc_html($section_name) . '</a></li>';
+                        // Ana sayfada Başyazı aktif görünsün
+                        $current_class = '';
+                        if (is_front_page() && $section_type === 'aciklama') {
+                            $current_class = 'current-menu-item';
+                        } elseif (is_singular('mi_section') && get_the_ID() == $section->ID) {
+                            $current_class = 'current-menu-item';
+                        }
+                        
+                        // # içeren menü item'ları için özel class
+                        $has_hash = strpos($section_name, '#') !== false;
+                        $menu_item_class = $has_hash ? 'menu-item-has-hash' : '';
+                        
+                        echo '<li class="' . esc_attr($current_class . ' ' . $menu_item_class) . '"><a href="' . esc_url($section_url) . '" data-section-id="' . esc_attr($section->ID) . '">' . esc_html($section_name) . '</a></li>';
                     }
                     echo '</ul>';
                 } else {

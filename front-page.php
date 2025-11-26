@@ -9,14 +9,20 @@ get_header();
 
 <main class="front-page-main">
     <?php
-    // Aktif section'ları sırayla göster
+    // Ana sayfada sadece Başyazı (aciklama) bölümünü göster
     $sections = get_posts(array(
         'post_type' => 'mi_section',
         'posts_per_page' => -1,
         'meta_query' => array(
+            'relation' => 'AND',
             array(
                 'key' => '_mi_section_active',
                 'value' => '1',
+                'compare' => '='
+            ),
+            array(
+                'key' => '_mi_section_type',
+                'value' => 'aciklama',
                 'compare' => '='
             )
         ),
