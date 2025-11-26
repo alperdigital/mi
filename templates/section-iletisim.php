@@ -101,17 +101,7 @@ $quick_button_text = get_post_meta($post_id, '_mi_iletisim_quick_button_text', t
             </div>
             <?php endif; ?>
             
-            <?php if ($show_quick) : ?>
-            <div class="iletisim-quick">
-                <?php /* "Hızlı İletişim" başlığı kaldırıldı - sadece buton ve metin kalsın */ ?>
-                <p><?php echo esc_html($quick_text); ?></p>
-                <a href="mailto:<?php echo esc_attr($contact_email); ?>?subject=Yazı Gönderimi&body=Merhaba,%0D%0A%0D%0AYazımı paylaşmak istiyorum." 
-                   class="quick-email-btn">
-                    <span>📧</span>
-                    <span><?php echo esc_html($quick_button_text); ?></span>
-                </a>
-            </div>
-            <?php endif; ?>
+            <?php /* Hızlı İletişim bölümü tamamen kaldırıldı */ ?>
         </div>
     </div>
 </div>
