@@ -55,11 +55,17 @@
                             $current_class = 'current-menu-item';
                         }
                         
-                        // # içeren menü item'ları için özel class
+                        // # içeren menü item'ları için özel class ve formatlama
                         $has_hash = strpos($section_name, '#') !== false;
                         $menu_item_class = $has_hash ? 'menu-item-has-hash' : '';
                         
-                        echo '<li class="' . esc_attr($current_class . ' ' . $menu_item_class) . '"><a href="' . esc_url($section_url) . '" data-section-id="' . esc_attr($section->ID) . '">' . esc_html($section_name) . '</a></li>';
+                        // # içeren menü item'ları için alt alta formatla
+                        $display_name = $section_name;
+                        if ($has_hash) {
+                            $display_name = preg_replace('/\s+#/', "\n#", $section_name);
+                        }
+                        
+                        echo '<li class="' . esc_attr($current_class . ' ' . $menu_item_class) . '"><a href="' . esc_url($section_url) . '" data-section-id="' . esc_attr($section->ID) . '">' . nl2br(esc_html($display_name)) . '</a></li>';
                     }
                     echo '</ul>';
                 } else {
