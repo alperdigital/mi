@@ -91,7 +91,16 @@ add_action('after_setup_theme', 'mi_theme_setup');
 
 // Enqueue styles and scripts
 function mi_enqueue_scripts() {
+    // Base theme stylesheet
     wp_enqueue_style('mi-style', get_stylesheet_uri(), array(), '1.0.0');
+    
+    // Winter / New Year event stylesheet (Hay Day look & feel)
+    wp_enqueue_style(
+        'mi-winter-style',
+        get_template_directory_uri() . '/assets/css/hayday-winter.css',
+        array('mi-style'),
+        '1.0.0'
+    );
     
     // Print stylesheet
     wp_enqueue_style('mi-print', get_template_directory_uri() . '/print.css', array(), '1.0.0', 'print');
@@ -136,6 +145,8 @@ function mi_body_classes($classes) {
     if (is_home() || is_front_page()) {
         $classes[] = 'home-page';
     }
+    // Enable Hay Day winter theme sitewide
+    $classes[] = 'theme-hayday-winter';
     return $classes;
 }
 add_filter('body_class', 'mi_body_classes');
